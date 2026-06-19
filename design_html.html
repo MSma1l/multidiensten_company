@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randstad - Your Career Awaits</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #34495e;
+            background: #f5f7fa;
+            overflow-x: hidden;
+        }
+
+        /* ========== HEADER ========== */
+        header {
+            background: white;
+            padding: 18px 50px;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            border-bottom: 1px solid #ecf0f1;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e3a8a;
+            letter-spacing: -0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            color: #2d5aa9;
+            transform: scale(1.05);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 13px;
+            color: #1e3a8a;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #1e3a8a, #2d5aa9);
+            transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 3px;
+        }
+
+        .nav-btn:hover {
+            color: #2d5aa9;
+            transform: translateY(-3px);
+            text-shadow: 0 2px 8px rgba(30, 58, 138, 0.2);
+        }
+
+        .nav-btn:hover::after {
+            width: 100%;
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa9 100%);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
+            transform: scale(1.05);
+            padding: 10px 24px;
+        }
+
+        .nav-btn.active::after {
+            display: none;
+        }
+
+        .nav-btn.active:hover {
+            transform: scale(1.08) translateY(-2px);
+            box-shadow: 0 8px 25px rgba(30, 58, 138, 0.4);
+        }
+
+        .lang-switcher {
+            display: flex;
+            gap: 8px;
+            background: #f0f0f0;
+            padding: 6px;
+            border-radius: 8px;
+            margin-left: 16px;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 13px;
+            border-radius: 6px;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .lang-btn.active {
+            background: white;
+            color: #0066CC;
+            box-shadow: 0 2px 8px rgba(0, 102, 204, 0.2);
+            transform: scale(1.05);
+        }
+
+        /* ========== PAGE STATES ========== */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa9 100%);
+            padding: 100px 50px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -150px;
+            right: -100px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 54px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            animation: slideInDown 0.8s ease-out;
+        }
+
+        .hero p {
+            font-size: 18px;
+            opacity: 0.95;
+            margin-bottom: 40px;
+            font-weight: 500;
+            animation: slideInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: slideInUp 0.8s ease-out 0.4s both;
+        }
+
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn {
+            padding: 14px 40px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 900;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #1e3a8a;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-4px);
+        }
+
+        /* ========== QUICK STATS ========== */
+        .quick-stats {
+            background: white;
+            padding: 60px 50px;
+            margin: -40px 50px 0;
+            border-radius: 16px;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        .quick-stats-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+        }
+
+        .quick-stat {
+            text-align: center;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .quick-stat:hover {
+            transform: translateY(-8px);
+        }
+
+        .quick-stat-icon {
+            font-size: 48px;
+            color: #1e3a8a;
+            margin-bottom: 16px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .quick-stat-number {
+            font-size: 40px;
+            font-weight: 900;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+        }
+
+        .quick-stat-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .quick-stat-text {
+            font-size: 13px;
+            color: #7f8c8d;
+            font-weight: 600;
+        }
+
+        /* ========== SECTION HEADER ========== */
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 42px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: #7f8c8d;
+            font-weight: 400;
+        }
+
+        /* ========== COMPANIES SECTION ========== */
+        .companies-section {
+            padding: 100px 50px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+        }
+
+        .companies-container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .companies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .company-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            border: 1px solid #ecf0f1;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .company-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 40px rgba(30, 58, 138, 0.15);
+            border-color: #1e3a8a;
+        }
+
+        .company-logo {
+            font-size: 56px;
+            color: #1e3a8a;
+            margin-bottom: 20px;
+        }
+
+        .company-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
+
+        .company-desc {
+            font-size: 14px;
+            color: #7f8c8d;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        /* ========== FEATURES SECTION ========== */
+        .features-section {
+            padding: 100px 50px;
+            background: white;
+        }
+
+        .features-container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background: #f8f9fb;
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid #ecf0f1;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            box-shadow: 0 12px 32px rgba(30, 58, 138, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: #e8f1ff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #1e3a8a;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: #7f8c8d;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        /* ========== ABOUT SECTION ========== */
+        .about-section {
+            padding: 100px 50px;
+            background: linear-gradient(135deg, #0a1b3b 0%, #1e3a8a 100%);
+            color: white;
+            margin-top: 80px;
+        }
+
+        .about-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-content h2 {
+            font-size: 44px;
+            font-weight: 900;
+            margin-bottom: 24px;
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+
+        .about-content p {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        .about-buttons {
+            display: flex;
+            gap: 16px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn-about {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 900;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-about-primary {
+            background: #ffeb3b;
+            color: #0a1b3b;
+        }
+
+        .btn-about-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(255, 235, 59, 0.4);
+        }
+
+        .btn-about-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-about-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .about-image {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+            height: 450px;
+            background: linear-gradient(135deg, rgba(255, 235, 59, 0.1), rgba(45, 90, 169, 0.2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* ========== TESTIMONIALS SECTION ========== */
+        .testimonials-section {
+            padding: 100px 50px;
+            background: #f5f7fa;
+        }
+
+        .testimonials-container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 32px;
+            margin-top: 50px;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid #ecf0f1;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .testimonial-card:hover {
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+            transform: translateY(-4px);
+        }
+
+        .rating {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 16px;
+        }
+
+        .star {
+            color: #f39c12;
+            font-size: 16px;
+        }
+
+        .testimonial-text {
+            font-size: 15px;
+            color: #34495e;
+            line-height: 1.8;
+            margin-bottom: 24px;
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-top: 1px solid #e0e6ed;
+            padding-top: 20px;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1e3a8a, #2d5aa9);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .author-info h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 2px;
+        }
+
+        .author-job {
+            font-size: 13px;
+            color: #1e3a8a;
+            font-weight: 600;
+        }
+
+        /* ========== BLOCK SECTION ========== */
+        .block-section {
+            padding: 100px 50px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa9 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .block-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .block-title {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .block-subtitle {
+            font-size: 18px;
+            opacity: 0.95;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        .block-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-block {
+            padding: 16px 48px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 900;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-block-primary {
+            background: #ffeb3b;
+            color: #1e3a8a;
+        }
+
+        .btn-block-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(255, 235, 59, 0.4);
+        }
+
+        .btn-block-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-block-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ========== JOBS PAGE ========== */
+        .jobs-page {
+            padding: 60px 50px;
+            min-height: 100vh;
+        }
+
+        .jobs-header {
+            max-width: 1600px;
+            margin: 0 auto 50px;
+        }
+
+        .jobs-title {
+            font-size: 42px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 30px;
+        }
+
+        .filters-section {
+            max-width: 1600px;
+            margin: 0 auto 50px;
+            background: #f8f9fb;
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-label {
+            font-weight: 700;
+            font-size: 13px;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .filter-input,
+        .filter-select {
+            padding: 12px;
+            border: 1.5px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .filter-input:focus,
+        .filter-select:focus {
+            outline: none;
+            border-color: #1e3a8a;
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+        }
+
+        .jobs-grid {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 28px;
+        }
+
+        .job-card {
+            background: white;
+            border-radius: 12px;
+            border: 1.5px solid #ecf0f1;
+            padding: 28px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .job-card:hover {
+            box-shadow: 0 16px 40px rgba(30, 58, 138, 0.15);
+            transform: translateY(-6px);
+            border-color: #1e3a8a;
+        }
+
+        .job-header {
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .job-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 6px;
+        }
+
+        .job-company {
+            font-size: 13px;
+            color: #1e3a8a;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .job-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #ecf0f1;
+            font-size: 14px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #7f8c8d;
+        }
+
+        .meta-item i {
+            color: #1e3a8a;
+            width: 16px;
+        }
+
+        .job-salary {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 16px;
+        }
+
+        .job-description {
+            font-size: 14px;
+            color: #34495e;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .job-button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa9 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .job-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(30, 58, 138, 0.3);
+        }
+
+        /* ========== CONTACT PAGE ========== */
+        .contact-page {
+            padding: 60px 50px;
+            min-height: 100vh;
+        }
+
+        .contact-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contact-title {
+            font-size: 42px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 16px;
+        }
+
+        .contact-subtitle {
+            font-size: 16px;
+            color: #7f8c8d;
+            margin-bottom: 50px;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 50px;
+            border-radius: 12px;
+            border: 1px solid #ecf0f1;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            font-size: 14px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1.5px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1e3a8a;
+            box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #2d5aa9 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 900;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(30, 58, 138, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .form-message {
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        .form-message.success {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+        }
+
+        .form-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background: #1e3a8a;
+            color: white;
+            padding: 60px 50px 40px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .footer-column p,
+        .footer-column a {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 10px;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .footer-column a:hover {
+            color: #ffeb3b;
+            transform: translateX(4px);
+        }
+
+        .footer-bottom {
+            max-width: 1600px;
+            margin: 0 auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 30px;
+            text-align: center;
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        /* ========== HIDDEN TEXT ========== */
+        .hidden-en { display: none; }
+        .hidden-nl { display: block; }
+
+        .lang-en .hidden-en { display: block; }
+        .lang-en .hidden-nl { display: none; }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            header { padding: 14px 20px; }
+            .hero { padding: 60px 20px; }
+            .hero h1 { font-size: 36px; }
+            .quick-stats { margin: -40px 20px 0; padding: 40px 20px; }
+            .quick-stats-container { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+            .about-section { padding: 60px 20px; }
+            .about-container { grid-template-columns: 1fr; }
+            .block-section { padding: 60px 20px; }
+            .block-title { font-size: 32px; }
+            .companies-section, .features-section, .testimonials-section, .jobs-page, .contact-page {
+                padding: 40px 20px;
+            }
+            .companies-grid, .features-grid, .testimonials-grid, .jobs-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .contact-form { padding: 30px 20px; }
+            .nav-buttons { flex-direction: column; gap: 8px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 28px; }
+            .quick-stats-container { grid-template-columns: 1fr; }
+            .block-title { font-size: 26px; }
+        }
+    </style>
+</head>
+<body class="lang-nl">
+
+    <!-- ========== HEADER ========== -->
+    <header>
+        <div class="header-container">
+            <div class="logo" onclick="showPage('home')">RANDSTAD</div>
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <div class="nav-buttons">
+                    <button class="nav-btn active" onclick="showPageBtn(event, 'home')">
+                        <span class="hidden-nl">Início</span>
+                        <span class="hidden-en">Home</span>
+                    </button>
+                    <button class="nav-btn" onclick="showPageBtn(event, 'jobs')">
+                        <span class="hidden-nl">Posições</span>
+                        <span class="hidden-en">Opportunities</span>
+                    </button>
+                    <button class="nav-btn" onclick="showPageBtn(event, 'contact')">
+                        <span class="hidden-nl">Contacte</span>
+                        <span class="hidden-en">Connect</span>
+                    </button>
+                </div>
+                <div class="lang-switcher">
+                    <button class="lang-btn active" onclick="setLanguage('nl')">NL</button>
+                    <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== HOME PAGE ========== -->
+    <div id="home" class="page active">
+
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hidden-nl">Comece sua Carreira Transformadora</h1>
+                <h1 class="hidden-en">Begin Your Career Transformation</h1>
+                
+                <p class="hidden-nl">Dezenas de milhares de profissionais nos confiam para encontrar suas melhores oportunidades de trabalho. Você está pronto para evoluir?</p>
+                <p class="hidden-en">Tens of thousands of professionals trust us to discover their ideal career paths. Are you ready to advance?</p>
+
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="showPageBtn(event, 'jobs')">
+                        <span class="hidden-nl">Explorar Oportunidades</span>
+                        <span class="hidden-en">Browse Opportunities</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="showPageBtn(event, 'contact')">
+                        <span class="hidden-nl">Inscreva-se Agora</span>
+                        <span class="hidden-en">Apply Today</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- QUICK STATS -->
+        <section class="quick-stats">
+            <div class="quick-stats-container">
+                <div class="quick-stat">
+                    <div class="quick-stat-icon"><i class="fas fa-users"></i></div>
+                    <div class="quick-stat-number">185K+</div>
+                    <div class="quick-stat-label hidden-nl">Profissionais Contratados</div>
+                    <div class="quick-stat-label hidden-en">Professionals Hired</div>
+                    <div class="quick-stat-text hidden-nl">Somente este ano</div>
+                    <div class="quick-stat-text hidden-en">This year alone</div>
+                </div>
+
+                <div class="quick-stat">
+                    <div class="quick-stat-icon"><i class="fas fa-briefcase"></i></div>
+                    <div class="quick-stat-number">5000+</div>
+                    <div class="quick-stat-label hidden-nl">Posições em Aberto</div>
+                    <div class="quick-stat-label hidden-en">Open Positions</div>
+                    <div class="quick-stat-text hidden-nl">Disponíveis agora</div>
+                    <div class="quick-stat-text hidden-en">Ready now</div>
+                </div>
+
+                <div class="quick-stat">
+                    <div class="quick-stat-icon"><i class="fas fa-star"></i></div>
+                    <div class="quick-stat-number">4.9/5</div>
+                    <div class="quick-stat-label hidden-nl">Avaliações de Clientes</div>
+                    <div class="quick-stat-label hidden-en">Client Ratings</div>
+                    <div class="quick-stat-text hidden-nl">De 10 mil usuários</div>
+                    <div class="quick-stat-text hidden-en">From 10K+ users</div>
+                </div>
+
+                <div class="quick-stat">
+                    <div class="quick-stat-icon"><i class="fas fa-handshake"></i></div>
+                    <div class="quick-stat-number">100%</div>
+                    <div class="quick-stat-label hidden-nl">Dedicação Total</div>
+                    <div class="quick-stat-label hidden-en">Full Commitment</div>
+                    <div class="quick-stat-text hidden-nl">Para seu sucesso</div>
+                    <div class="quick-stat-text hidden-en">To your success</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURES SECTION -->
+        <section class="features-section">
+            <div class="features-container">
+                <div class="section-header">
+                    <h2 class="section-title hidden-nl">Porque Nos Escolher</h2>
+                    <h2 class="section-title hidden-en">Why Choose Us</h2>
+                    <p class="section-subtitle hidden-nl">Oferecemos muito mais que empregos: oferecemos transformação de carreira</p>
+                    <p class="section-subtitle hidden-en">We offer more than jobs: we offer career transformation</p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-magic"></i></div>
+                        <h3 class="feature-title hidden-nl">Correspondência Perfeita</h3>
+                        <h3 class="feature-title hidden-en">Perfect Match</h3>
+                        <p class="feature-desc hidden-nl">Algoritmos avançados combinam suas habilidades com oportunidades ideais</p>
+                        <p class="feature-desc hidden-en">Advanced algorithms match your skills with ideal opportunities</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                        <h3 class="feature-title hidden-nl">Crescimento Profissional</h3>
+                        <h3 class="feature-title hidden-en">Career Growth</h3>
+                        <p class="feature-desc hidden-nl">Treinamentos gratuitos e programas de mentoring exclusivos</p>
+                        <p class="feature-desc hidden-en">Free training and exclusive mentoring programs</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-coins"></i></div>
+                        <h3 class="feature-title hidden-nl">Salários Competitivos</h3>
+                        <h3 class="feature-title hidden-en">Competitive Pay</h3>
+                        <p class="feature-desc hidden-nl">Garantimos as melhores negociações salariais do mercado</p>
+                        <p class="feature-desc hidden-en">We guarantee the best salary negotiations in the market</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                        <h3 class="feature-title hidden-nl">Confiança e Segurança</h3>
+                        <h3 class="feature-title hidden-en">Trust & Safety</h3>
+                        <p class="feature-desc hidden-nl">60+ anos de experiência e milhões de profissionais confiando em nós</p>
+                        <p class="feature-desc hidden-en">60+ years of experience with millions trusting us</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-hourglass-half"></i></div>
+                        <h3 class="feature-title hidden-nl">Flexibilidade Total</h3>
+                        <h3 class="feature-title hidden-en">Total Flexibility</h3>
+                        <p class="feature-desc hidden-nl">Escolha entre fulltime, meio período ou trabalho temporário</p>
+                        <p class="feature-desc hidden-en">Choose between full-time, part-time or temporary work</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-handshake"></i></div>
+                        <h3 class="feature-title hidden-nl">Apoio Pessoal</h3>
+                        <h3 class="feature-title hidden-en">Personal Support</h3>
+                        <p class="feature-desc hidden-nl">Seu recrutador dedicado está sempre disponível para ajudar</p>
+                        <p class="feature-desc hidden-en">Your dedicated recruiter is always ready to help</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section class="about-section">
+            <div class="about-container">
+                <div class="about-content">
+                    <h2 class="hidden-nl">Sua Carreira Perfeita Nos Espera</h2>
+                    <h2 class="hidden-en">Your Ideal Career Awaits</h2>
+                    
+                    <p class="hidden-nl">
+                        Especializamo-nos em conectar talento com oportunidades nos setores de <strong style="color: #ffeb3b;">logística, manufatura, tecnologia, armazenamento e comércio</strong>. 
+                        Nossa experiência profunda nestes mercados nos permite fazer as conexões perfeitas.
+                    </p>
+                    <p class="hidden-en">
+                        We excel at connecting talent with opportunities in <strong style="color: #ffeb3b;">logistics, manufacturing, technology, warehousing and commerce</strong>. 
+                        Our deep industry expertise enables perfect career matches.
+                    </p>
+
+                    <div class="about-content p" style="margin-top: 20px; font-size: 15px;">
+                        <p class="hidden-nl"><strong>A partir de nossas sedes em Gelderland, Limburg e North Brabant,</strong> trabalhamos com atenção pessoal e relacionamentos próximos. Sua transformação profissional é nossa missão.</p>
+                        <p class="hidden-en"><strong>Operating from offices in Gelderland, Limburg and North Brabant,</strong> we build lasting professional relationships. Your career transformation is our mission.</p>
+                    </div>
+
+                    <div class="about-buttons">
+                        <button class="btn-about btn-about-primary" onclick="showPageBtn(event, 'jobs')">
+                            <span class="hidden-nl">Encontre Seu Trabalho <i class="fas fa-arrow-right"></i></span>
+                            <span class="hidden-en">Find Your Role <i class="fas fa-arrow-right"></i></span>
+                        </button>
+                        <button class="btn-about btn-about-secondary" onclick="showPageBtn(event, 'contact')">
+                            <span class="hidden-nl">Conversar Conosco <i class="fas fa-arrow-right"></i></span>
+                            <span class="hidden-en">Talk With Us <i class="fas fa-arrow-right"></i></span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="about-image">
+                    <i class="fas fa-image"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS SECTION -->
+        <section class="testimonials-section">
+            <div class="testimonials-container">
+                <div class="section-header">
+                    <h2 class="section-title hidden-nl">Histórias de Sucesso</h2>
+                    <h2 class="section-title hidden-en">Success Stories</h2>
+                    <p class="section-subtitle hidden-nl">Profissionais que transformaram suas vidas através de nossas oportunidades</p>
+                    <p class="section-subtitle hidden-en">Professionals who transformed their lives through our opportunities</p>
+                </div>
+
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                        <p class="testimonial-text hidden-nl">"Randstad transformou minha carreira. O processo foi simples, rápido e profissional. Em dias, estava em meu novo trabalho perfeito!"</p>
+                        <p class="testimonial-text hidden-en">"Randstad transformed my career. The process was smooth, fast and professional. Within days, I was in my perfect new role!"</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">MP</div>
+                            <div class="author-info">
+                                <h4>Miguel Pereira</h4>
+                                <div class="author-job hidden-nl">Especialista Técnico</div>
+                                <div class="author-job hidden-en">Technical Specialist</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                        <p class="testimonial-text hidden-nl">"A equipe de Randstad foi incrível! Não apenas encontraram o trabalho certo, mas também me prepararam para o sucesso."</p>
+                        <p class="testimonial-text hidden-en">"The Randstad team was amazing! Not only did they find the right job, they prepared me for success."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">CF</div>
+                            <div class="author-info">
+                                <h4>Carla Fernandes</h4>
+                                <div class="author-job hidden-nl">Gerente de Projeto</div>
+                                <div class="author-job hidden-en">Project Manager</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                        <p class="testimonial-text hidden-nl">"Triplicar meu salário? Sim! Randstad negociou um pacote incrível para mim. Obrigado pela dedicação!"</p>
+                        <p class="testimonial-text hidden-en">"Triple my salary? Yes! Randstad negotiated an incredible package for me. Thank you for the dedication!"</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">JL</div>
+                            <div class="author-info">
+                                <h4>João Lucas</h4>
+                                <div class="author-job hidden-nl">Analista Financeiro</div>
+                                <div class="author-job hidden-en">Financial Analyst</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOCK SECTION -->
+        <section class="block-section">
+            <div class="block-container">
+                <h2 class="block-title hidden-nl">Sua Próxima Grande Chance</h2>
+                <h2 class="block-title hidden-en">Your Next Big Opportunity</h2>
+                
+                <p class="block-subtitle hidden-nl">
+                    Centenas de milhares já transformaram suas carreiras através de nós. 
+                    Agora é a sua vez de alcançar novos patamares profissionais!
+                </p>
+                <p class="block-subtitle hidden-en">
+                    Hundreds of thousands have already transformed their careers with us. 
+                    Now it's your turn to reach new professional heights!
+                </p>
+
+                <div class="block-buttons">
+                    <button class="btn-block btn-block-primary" onclick="showPageBtn(event, 'jobs')">
+                        <span class="hidden-nl">Descobrir Vagas</span>
+                        <span class="hidden-en">Discover Openings</span>
+                    </button>
+                    <button class="btn-block btn-block-secondary" onclick="showPageBtn(event, 'contact')">
+                        <span class="hidden-nl">Compartilhe Seu CV</span>
+                        <span class="hidden-en">Submit Your Profile</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ========== JOBS PAGE ========== -->
+    <div id="jobs" class="page">
+        <div class="jobs-page">
+            <div class="jobs-header">
+                <h1 class="jobs-title hidden-nl">Oportunidades que Combinam com Você</h1>
+                <h1 class="jobs-title hidden-en">Opportunities That Match You</h1>
+            </div>
+
+            <div class="filters-section">
+                <div class="filters-grid">
+                    <div class="filter-group">
+                        <label class="filter-label hidden-nl">Procure</label>
+                        <label class="filter-label hidden-en">Search</label>
+                        <input type="text" class="filter-input" id="searchInput" placeholder="Job title..." onkeyup="filterJobs()">
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label hidden-nl">Localização</label>
+                        <label class="filter-label hidden-en">Location</label>
+                        <select class="filter-select" id="locationFilter" onchange="filterJobs()">
+                            <option value="">Todas as Cidades / All Cities</option>
+                            <option value="Amsterdam">Amsterdam</option>
+                            <option value="Rotterdam">Rotterdam</option>
+                            <option value="Utrecht">Utrecht</option>
+                            <option value="Eindhoven">Eindhoven</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label hidden-nl">Salário</label>
+                        <label class="filter-label hidden-en">Salary Range</label>
+                        <select class="filter-select" id="salaryFilter" onchange="filterJobs()">
+                            <option value="">Todos os Salários / All Salaries</option>
+                            <option value="0-2000">€0 - €2.000</option>
+                            <option value="2000-3000">€2.000 - €3.000</option>
+                            <option value="3000-4000">€3.000 - €4.000</option>
+                            <option value="4000+">€4.000+</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="jobs-grid" id="jobsContainer"></div>
+        </div>
+    </div>
+
+    <!-- ========== CONTACT PAGE ========== -->
+    <div id="contact" class="page">
+        <div class="contact-page">
+            <div class="contact-container">
+                <h1 class="contact-title hidden-nl">Comece uma Conversa</h1>
+                <h1 class="contact-title hidden-en">Let's Chat</h1>
+                
+                <p class="contact-subtitle hidden-nl">Envie suas informações e entraremos em contato rapidamente para discutir suas oportunidades ideais</p>
+                <p class="contact-subtitle hidden-en">Share your details and we'll reach out to explore your ideal opportunities</p>
+
+                <form class="contact-form" id="contactForm" onsubmit="submitForm(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="hidden-nl">Nome</label>
+                            <label class="hidden-en">First Name</label>
+                            <input type="text" name="firstName" required placeholder="Your first name">
+                        </div>
+                        <div class="form-group">
+                            <label class="hidden-nl">Sobrenome</label>
+                            <label class="hidden-en">Last Name</label>
+                            <input type="text" name="lastName" required placeholder="Your last name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="hidden-nl">E-mail</label>
+                        <label class="hidden-en">Email Address</label>
+                        <input type="email" name="email" required placeholder="your@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="hidden-nl">Telefone</label>
+                        <label class="hidden-en">Phone Number</label>
+                        <input type="tel" name="phone" required placeholder="+31 6 12345678">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="hidden-nl">Mensagem</label>
+                        <label class="hidden-en">Your Message</label>
+                        <textarea name="message" required placeholder="Tell us about yourself..."></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span class="hidden-nl">Enviar Solicitação</span>
+                        <span class="hidden-en">Send Request</span>
+                    </button>
+
+                    <div class="form-message" id="formMessage"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== FOOTER ========== -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3 class="hidden-nl">Sobre Nós</h3>
+                <h3 class="hidden-en">About Us</h3>
+                <p class="hidden-nl">Randstad é uma empresa global de recrutamento com mais de 60 anos conectando talentos com oportunidades transformadoras.</p>
+                <p class="hidden-en">Randstad is a global recruitment leader with 60+ years of experience connecting talent with transformative opportunities.</p>
+            </div>
+            <div class="footer-column">
+                <h3 class="hidden-nl">Contacte-nos</h3>
+                <h3 class="hidden-en">Contact Us</h3>
+                <p>info@randstad.nl</p>
+                <p>+31 30 202 0202</p>
+                <p>Slotlaan 314 B, 3701GX Zeist</p>
+            </div>
+            <div class="footer-column">
+                <h3 class="hidden-nl">Redes Sociais</h3>
+                <h3 class="hidden-en">Social Media</h3>
+                <p><a href="#">LinkedIn</a></p>
+                <p><a href="#">Facebook</a></p>
+                <p><a href="#">Instagram</a></p>
+            </div>
+            <div class="footer-column">
+                <h3 class="hidden-nl">Links</h3>
+                <h3 class="hidden-en">Links</h3>
+                <p><a href="#">Privacidade / Privacy</a></p>
+                <p><a href="#">Termos / Terms</a></p>
+                <p><a href="#">Mapa do Site / Sitemap</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Randstad. <span class="hidden-nl">Todos os direitos reservados.</span><span class="hidden-en">All rights reserved.</span></p>
+        </div>
+    </footer>
+
+    <script>
+        // ===== LANGUAGE =====
+        function setLanguage(lang) {
+            document.documentElement.lang = lang;
+            document.body.className = lang === 'en' ? 'lang-en' : 'lang-nl';
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            localStorage.setItem('language', lang);
+        }
+
+        const savedLang = localStorage.getItem('language') || 'nl';
+        setLanguage(savedLang);
+
+        // ===== PAGE NAVIGATION WITH BUTTON EFFECTS =====
+        function showPageBtn(e, pageName) {
+            showPage(pageName);
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            e.target.closest('.nav-btn').classList.add('active');
+        }
+
+        function showPage(pageName) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageName).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // ===== JOBS DATABASE =====
+        const jobsData = [
+            { title: 'Eletricista Sênior', titleEN: 'Senior Electrician', company: 'Randstad', location: 'Amsterdam', salary: '€2.500 - €3.200', salaryRange: '2000-3000', desc: 'Trabalhos técnicos especializados em instalações elétricas' },
+            { title: 'Operador CNC', titleEN: 'CNC Operator', company: 'Randstad', location: 'Eindhoven', salary: '€2.200 - €2.800', salaryRange: '2000-3000', desc: 'Operação de máquinas CNC de precisão' },
+            { title: 'Enfermeira', titleEN: 'Registered Nurse', company: 'Randstad', location: 'Rotterdam', salary: '€2.400 - €3.000', salaryRange: '2000-3000', desc: 'Atendimento e cuidado de pacientes' },
+            { title: 'Operário de Armazém', titleEN: 'Warehouse Associate', company: 'Randstad', location: 'Rotterdam', salary: '€1.850 - €2.400', salaryRange: '0-2000', desc: 'Operações de armazém e gestão de inventário' },
+            { title: 'Administrador de Escritório', titleEN: 'Office Administrator', company: 'Randstad', location: 'Utrecht', salary: '€1.800 - €2.300', salaryRange: '0-2000', desc: 'Suporte administrativo' },
+            { title: 'Projetista CAD', titleEN: 'CAD Designer', company: 'Randstad', location: 'Amsterdam', salary: '€2.800 - €3.600', salaryRange: '3000-4000', desc: 'Desenhos com software CAD' },
+            { title: 'Motorista Profissional', titleEN: 'Professional Driver', company: 'Randstad', location: 'Amsterdam', salary: '€2.000 - €2.600', salaryRange: '2000-3000', desc: 'Transporte e entrega de mercadorias' },
+            { title: 'Analista Financeiro', titleEN: 'Financial Analyst', company: 'Randstad', location: 'Amsterdam', salary: '€3.000 - €4.000', salaryRange: '3000-4000', desc: 'Análise financeira e relatórios' },
+        ];
+
+        function renderJobs(jobs = jobsData) {
+            const isEN = document.body.className === 'lang-en';
+            const container = document.getElementById('jobsContainer');
+            container.innerHTML = '';
+
+            jobs.forEach(job => {
+                const card = document.createElement('div');
+                card.className = 'job-card';
+                card.innerHTML = `
+                    <div class="job-header">
+                        <h3 class="job-title">${isEN ? job.titleEN : job.title}</h3>
+                        <p class="job-company">${job.company}</p>
+                    </div>
+                    <div class="job-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${job.location}</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-briefcase"></i>
+                            <span>${isEN ? 'Full-time' : 'Tempo Integral'}</span>
+                        </div>
+                    </div>
+                    <div class="job-salary">${job.salary}</div>
+                    <p class="job-description">${job.desc}</p>
+                    <button class="job-button" onclick="showPage('contact')">
+                        ${isEN ? 'Apply Now' : 'Candidatar-se'}
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterJobs() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const location = document.getElementById('locationFilter').value;
+            const salary = document.getElementById('salaryFilter').value;
+
+            const filtered = jobsData.filter(job => {
+                const title = (job.title + ' ' + job.titleEN).toLowerCase();
+                const matchSearch = title.includes(searchTerm);
+                const matchLocation = !location || job.location === location;
+                const matchSalary = !salary || job.salaryRange === salary;
+                
+                return matchSearch && matchLocation && matchSalary;
+            });
+
+            renderJobs(filtered);
+        }
+
+        // ===== FORM SUBMISSION =====
+        function submitForm(e) {
+            e.preventDefault();
+            
+            const form = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const messageDiv = document.getElementById('formMessage');
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = document.body.className === 'lang-en' ? 'Sending...' : 'Enviando...';
+
+            const formData = new FormData(form);
+            
+            fetch('https://formspree.io/f/myzywbdq', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    messageDiv.className = 'form-message success';
+                    messageDiv.textContent = document.body.className === 'lang-en' 
+                        ? 'Perfect! We will contact you very soon with exciting opportunities.' 
+                        : 'Perfeito! Em breve entraremos em contato com oportunidades incríveis.';
+                    form.reset();
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            })
+            .catch(error => {
+                messageDiv.className = 'form-message error';
+                messageDiv.textContent = document.body.className === 'lang-en' 
+                    ? 'We had a small hiccup. Please try again.' 
+                    : 'Tivemos um problema. Tente novamente.';
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.textContent = document.body.className === 'lang-en' ? 'Send Request' : 'Enviar Solicitação';
+            });
+        }
+
+        // ===== INITIALIZE =====
+        renderJobs();
+    </script>
+
+</body>
+</html>

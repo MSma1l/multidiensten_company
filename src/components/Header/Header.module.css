@@ -1,0 +1,138 @@
+.header {
+  background: white;
+  padding: 18px 50px;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.headerContainer {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: -0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logo:hover {
+  color: var(--color-primary-light);
+  transform: scale(1.05);
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.navButtons {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.navBtn {
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--color-primary);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.navBtn::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+  transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border-radius: 3px;
+}
+
+.navBtn:hover {
+  color: var(--color-primary-light);
+  transform: translateY(-3px);
+  text-shadow: 0 2px 8px rgba(30, 58, 138, 0.2);
+}
+
+.navBtn:hover::after {
+  width: 100%;
+}
+
+.active {
+  background: var(--gradient-primary);
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
+  transform: scale(1.05);
+  padding: 10px 24px;
+}
+
+.active::after {
+  display: none;
+}
+
+.active:hover {
+  color: white;
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.4);
+}
+
+.langSwitcher {
+  display: flex;
+  gap: 8px;
+  background: #f0f0f0;
+  padding: 6px;
+  border-radius: 8px;
+  margin-left: 16px;
+}
+
+.langBtn {
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 13px;
+  border-radius: 6px;
+  color: #666;
+  transition: all 0.3s;
+}
+
+.langActive {
+  background: white;
+  color: #0066cc;
+  box-shadow: 0 2px 8px rgba(0, 102, 204, 0.2);
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 14px 20px;
+  }
+  .navButtons {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
