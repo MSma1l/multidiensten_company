@@ -59,6 +59,14 @@
   box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
 }
 
+.resultsCount {
+  max-width: var(--max-width);
+  margin: -30px auto 24px;
+  color: var(--color-muted);
+  font-size: 14px;
+  font-weight: 600;
+}
+
 .grid {
   max-width: var(--max-width);
   margin: 0 auto;

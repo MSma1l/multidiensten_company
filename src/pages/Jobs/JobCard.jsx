@@ -19,8 +19,20 @@ export default function JobCard({ job }) {
           <span>{job.location}</span>
         </div>
         <div className={styles.metaItem}>
+          <i className="fas fa-clock"></i>
+          <span>
+            {job.hoursPerWeek} {t.jobs.hoursUnit}
+          </span>
+        </div>
+        <div className={styles.metaItem}>
+          <i className="fas fa-user-tie"></i>
+          <span>{t.jobs.levels[job.level]}</span>
+        </div>
+        <div className={styles.metaItem}>
           <i className="fas fa-briefcase"></i>
-          <span>{t.jobs.fullTime}</span>
+          <span>
+            {job.experienceYears}+ {t.jobs.yearsUnit}
+          </span>
         </div>
       </div>
 

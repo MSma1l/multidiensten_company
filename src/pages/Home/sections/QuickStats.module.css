@@ -1,7 +1,8 @@
 .quickStats {
   background: white;
   padding: 60px 50px;
-  margin: -40px 50px 0;
+  max-width: var(--max-width);
+  margin: -40px auto 0;
   border-radius: var(--radius-lg);
   position: relative;
   z-index: 10;
@@ -67,7 +68,7 @@
 
 @media (max-width: 768px) {
   .quickStats {
-    margin: -40px 20px 0;
+    margin: -40px auto 0;
     padding: 40px 20px;
   }
   .container {

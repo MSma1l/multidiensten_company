@@ -18,7 +18,8 @@
   --radius-md: 12px;
   --radius-lg: 16px;
 
-  --max-width: 1600px;
+  /* Page content spans 80% of the screen width (centered) on every page. */
+  --max-width: 80vw;
 }
 
 * {
