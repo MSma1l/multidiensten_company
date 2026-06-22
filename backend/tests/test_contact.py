@@ -27,14 +27,31 @@ def test_contact_success_persists_row(client, db_session):
 
 
 def test_contact_records_ip(client, db_session):
+    # The trusted client IP comes from X-Real-IP (set by nginx to $remote_addr).
     resp = client.post(
         "/api/contact",
         data=valid_contact_form(),
-        headers={"X-Forwarded-For": "198.51.100.5, 10.0.0.1"},
+        headers={"X-Real-IP": "198.51.100.5"},
     )
     assert resp.status_code == 201
     row = db_session.query(ContactSubmission).one()
     assert row.ip_address == "198.51.100.5"
+
+
+def test_contact_ignores_spoofed_xff(client, db_session):
+    # X-Forwarded-For is client-controlled and must NOT be trusted; only
+    # X-Real-IP (or the socket peer) is recorded.
+    resp = client.post(
+        "/api/contact",
+        data=valid_contact_form(),
+        headers={
+            "X-Forwarded-For": "1.2.3.4, 10.0.0.1",
+            "X-Real-IP": "198.51.100.9",
+        },
+    )
+    assert resp.status_code == 201
+    row = db_session.query(ContactSubmission).one()
+    assert row.ip_address == "198.51.100.9"
 
 
 def test_contact_xss_rejected_and_not_persisted(client, db_session):

@@ -23,12 +23,14 @@ from ..config import settings
 from ..database import get_db
 from ..models import ContactSubmission
 from ..schemas import ContactCreate, ContactCreateResponse
+from ..security import client_ip
 
 router = APIRouter(prefix="/api", tags=["public"])
 
 # Allowed CV file types and maximum upload size.
 _ALLOWED_CV_EXTENSIONS = {".pdf", ".doc", ".docx"}
 _MAX_CV_BYTES = 5 * 1024 * 1024  # 5 MB
+_CV_CHUNK_BYTES = 64 * 1024  # read uploads in 64 KB chunks
 _UNSAFE_NAME_RE = re.compile(r"[^A-Za-z0-9._-]+")
 
 
@@ -36,19 +38,6 @@ _UNSAFE_NAME_RE = re.compile(r"[^A-Za-z0-9._-]+")
 def health() -> dict[str, str]:
     """Lightweight liveness probe used by orchestration / uptime checks."""
     return {"status": "ok"}
-
-
-def _client_ip(request: Request) -> str | None:
-    """Best-effort extraction of the originating client IP.
-
-    Honours the first hop in ``X-Forwarded-For`` when present (the app is
-    expected to run behind a reverse proxy), otherwise falls back to the
-    direct peer address.
-    """
-    forwarded = request.headers.get("x-forwarded-for")
-    if forwarded:
-        return forwarded.split(",")[0].strip()
-    return request.client.host if request.client else None
 
 
 def _sanitize_filename(name: str) -> str:
@@ -104,12 +93,21 @@ async def create_contact(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                 detail="CV must be a .pdf, .doc or .docx file.",
             )
-        cv_content = await cv.read()
-        if len(cv_content) > _MAX_CV_BYTES:
-            raise HTTPException(
-                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-                detail="CV file must be 5 MB or smaller.",
-            )
+        # Stream the upload in bounded chunks and abort as soon as it exceeds
+        # the limit, so an attacker cannot force the whole (unbounded) body to
+        # be buffered into memory before the size check runs.
+        buffer = bytearray()
+        while True:
+            chunk = await cv.read(_CV_CHUNK_BYTES)
+            if not chunk:
+                break
+            buffer.extend(chunk)
+            if len(buffer) > _MAX_CV_BYTES:
+                raise HTTPException(
+                    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    detail="CV file must be 5 MB or smaller.",
+                )
+        cv_content = bytes(buffer)
         cv_original = os.path.basename(cv.filename)
 
     submission = ContactSubmission(
@@ -118,7 +116,7 @@ async def create_contact(
         email=payload.email,
         phone=payload.phone,
         message=payload.message,
-        ip_address=_client_ip(request),
+        ip_address=client_ip(request),
         cv_filename=cv_original,
     )
 

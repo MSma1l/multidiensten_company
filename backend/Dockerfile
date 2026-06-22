@@ -25,6 +25,14 @@ RUN pip install --no-cache-dir --upgrade pip \
 # Copy application code
 COPY app ./app
 
+# Run as a dedicated non-root user. Create the user, ensure the app directory
+# and the uploads volume are owned by it so the process can write CV files.
+RUN useradd --create-home --uid 10001 appuser \
+    && mkdir -p /app/uploads \
+    && chown -R appuser:appuser /app
+
+USER appuser
+
 EXPOSE 8000
 
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

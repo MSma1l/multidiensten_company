@@ -6,12 +6,31 @@ import time
 import uuid
 from datetime import datetime, timedelta, timezone
 
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, Request, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 
 from .config import settings
+
+
+# ---------------------------------------------------------------------------- #
+# Trusted client IP resolution
+# ---------------------------------------------------------------------------- #
+def client_ip(request: Request) -> str | None:
+    """Return the trusted originating client IP.
+
+    Security note: the left-most ``X-Forwarded-For`` hop is fully
+    client-controlled and must NOT be trusted — an attacker could rotate it to
+    sidestep the per-IP login lockout. The reverse proxy (nginx) sets
+    ``X-Real-IP`` to ``$remote_addr`` (the real TCP peer), so we prefer that and
+    otherwise fall back to the direct socket peer. ``X-Forwarded-For`` is
+    intentionally ignored here.
+    """
+    real_ip = request.headers.get("x-real-ip")
+    if real_ip:
+        return real_ip.strip()
+    return request.client.host if request.client else None
 
 # ---------------------------------------------------------------------------- #
 # Password hashing

@@ -57,6 +57,49 @@ def test_login_lockout_after_repeated_failures(client, admin_prefix):
     assert "Retry-After" in resp.headers
 
 
+def test_login_lockout_keys_off_trusted_ip(client, admin_prefix):
+    # Five failures from the same trusted X-Real-IP must trigger the lockout.
+    ip = {"X-Real-IP": "203.0.113.50"}
+    for _ in range(5):
+        client.post(
+            f"{admin_prefix}/api/login",
+            json={"username": ADMIN_USERNAME, "password": "wrong"},
+            headers=ip,
+        )
+    resp = client.post(
+        f"{admin_prefix}/api/login",
+        json={"username": ADMIN_USERNAME, "password": ADMIN_PASSWORD},
+        headers=ip,
+    )
+    assert resp.status_code == 429
+
+
+def test_login_lockout_not_bypassed_by_rotating_xff(client, admin_prefix):
+    # An attacker rotating X-Forwarded-For while behind the same real peer
+    # (X-Real-IP) must NOT escape the lockout: XFF is ignored.
+    real_ip = "203.0.113.51"
+    for i in range(5):
+        client.post(
+            f"{admin_prefix}/api/login",
+            json={"username": ADMIN_USERNAME, "password": "wrong"},
+            headers={"X-Real-IP": real_ip, "X-Forwarded-For": f"9.9.9.{i}"},
+        )
+    resp = client.post(
+        f"{admin_prefix}/api/login",
+        json={"username": ADMIN_USERNAME, "password": ADMIN_PASSWORD},
+        headers={"X-Real-IP": real_ip, "X-Forwarded-For": "9.9.9.250"},
+    )
+    assert resp.status_code == 429
+
+
+def test_docs_and_openapi_disabled_by_default(client):
+    # Docs/OpenAPI are off unless ENABLE_DOCS=true, so the secret ADMIN_PATH is
+    # never leaked through the schema.
+    assert client.get("/api/openapi.json").status_code == 404
+    assert client.get("/api/docs").status_code == 404
+    assert client.get("/api/redoc").status_code == 404
+
+
 def test_me_endpoint(client, admin_prefix, auth_headers):
     resp = client.get(f"{admin_prefix}/api/me", headers=auth_headers)
     assert resp.status_code == 200

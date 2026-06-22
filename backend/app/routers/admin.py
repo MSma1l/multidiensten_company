@@ -30,20 +30,13 @@ from ..schemas import (
 )
 from ..security import (
     authenticate_admin,
+    client_ip,
     create_access_token,
     get_current_admin,
     login_lock_remaining,
     register_failed_login,
     reset_login_attempts,
 )
-
-
-def _client_ip(request: Request) -> str | None:
-    """Best-effort extraction of the originating client IP (proxy-aware)."""
-    forwarded = request.headers.get("x-forwarded-for")
-    if forwarded:
-        return forwarded.split(",")[0].strip()
-    return request.client.host if request.client else None
 
 # Location of the single-file admin SPA.
 _ADMIN_HTML_PATH = Path(__file__).resolve().parent.parent / "static" / "admin.html"
@@ -81,7 +74,7 @@ def build_admin_router(settings: Settings) -> APIRouter:
         is locked out for 15 minutes (HTTP 429). A successful login resets the
         counter. Error messages stay generic to avoid user enumeration.
         """
-        ip = _client_ip(request)
+        ip = client_ip(request)
 
         remaining = login_lock_remaining(ip)
         if remaining > 0:

@@ -56,6 +56,15 @@ class Settings(BaseSettings):
     # Comma-separated list of allowed origins for the public API.
     CORS_ORIGINS: str = "http://localhost:8080,http://localhost:5173"
 
+    # ------------------------------------------------------------------ #
+    # API documentation
+    # ------------------------------------------------------------------ #
+    # Interactive docs (Swagger UI / ReDoc) and the OpenAPI schema are disabled
+    # by default because the schema would otherwise leak the secret ADMIN_PATH
+    # to unauthenticated clients. Set ENABLE_DOCS=true to turn them on (e.g. in
+    # a trusted development environment).
+    ENABLE_DOCS: bool = False
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
@@ -91,6 +100,87 @@ class Settings(BaseSettings):
             for origin in self.CORS_ORIGINS.split(",")
             if origin.strip()
         ]
+
+
+# --------------------------------------------------------------------------- #
+# Startup secret validation (fail-fast on weak / default / missing secrets)
+# --------------------------------------------------------------------------- #
+# Known insecure placeholder values that must never reach production. Compared
+# case-insensitively.
+_PLACEHOLDER_JWT_SECRETS = {
+    "",
+    "change-this-secret-in-production",
+    "changeme",
+    "secret",
+    "changethis",
+    "your-secret-key",
+}
+_PLACEHOLDER_PASSWORDS = {
+    "",
+    "changeme",
+    "password",
+    "admin",
+    "secret",
+}
+_PLACEHOLDER_DB_PASSWORDS = {
+    "",
+    "apppassword",
+    "postgres",
+    "password",
+    "changeme",
+}
+
+# Minimum acceptable lengths for the respective secrets.
+_MIN_JWT_SECRET_LEN = 32
+_MIN_ADMIN_PASSWORD_LEN = 8
+
+
+def validate_secrets(s: "Settings | None" = None) -> None:
+    """Validate security-critical settings, raising ``RuntimeError`` on failure.
+
+    Called at application startup so the process refuses to boot with a missing,
+    placeholder, or otherwise weak secret. Each error message names the offending
+    environment variable to make misconfiguration obvious.
+    """
+    s = s if s is not None else settings
+
+    # --- JWT_SECRET --------------------------------------------------------- #
+    jwt_secret = (s.JWT_SECRET or "").strip()
+    if jwt_secret.lower() in _PLACEHOLDER_JWT_SECRETS:
+        raise RuntimeError(
+            "JWT_SECRET is missing or set to a known placeholder. "
+            "Set a strong, random JWT_SECRET (at least "
+            f"{_MIN_JWT_SECRET_LEN} characters)."
+        )
+    if len(jwt_secret) < _MIN_JWT_SECRET_LEN:
+        raise RuntimeError(
+            f"JWT_SECRET is too short ({len(jwt_secret)} chars); it must be at "
+            f"least {_MIN_JWT_SECRET_LEN} characters long."
+        )
+
+    # --- ADMIN_PASSWORD ----------------------------------------------------- #
+    admin_password = s.ADMIN_PASSWORD or ""
+    if admin_password.strip().lower() in _PLACEHOLDER_PASSWORDS:
+        raise RuntimeError(
+            "ADMIN_PASSWORD is missing or set to a known placeholder. "
+            "Set a strong, unique ADMIN_PASSWORD."
+        )
+    if len(admin_password) < _MIN_ADMIN_PASSWORD_LEN:
+        raise RuntimeError(
+            f"ADMIN_PASSWORD is too short ({len(admin_password)} chars); it must "
+            f"be at least {_MIN_ADMIN_PASSWORD_LEN} characters long."
+        )
+
+    # --- POSTGRES_PASSWORD -------------------------------------------------- #
+    # Only enforced when the app actually connects to Postgres. When an explicit
+    # DATABASE_URL is supplied (e.g. SQLite in tests) the POSTGRES_* parts are
+    # unused, so the placeholder default is harmless.
+    if not s.DATABASE_URL:
+        if (s.POSTGRES_PASSWORD or "").strip().lower() in _PLACEHOLDER_DB_PASSWORDS:
+            raise RuntimeError(
+                "POSTGRES_PASSWORD is missing or set to a known placeholder "
+                "(e.g. 'apppassword'). Set a strong, unique POSTGRES_PASSWORD."
+            )
 
 
 @lru_cache

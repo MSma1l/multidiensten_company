@@ -16,9 +16,11 @@ import tempfile
 # Environment: must be configured before importing anything from ``app``.
 # --------------------------------------------------------------------------- #
 ADMIN_USERNAME = "admin"
+# Test secrets must satisfy validate_secrets(): ADMIN_PASSWORD >= 8 chars and
+# JWT_SECRET >= 32 chars (and neither may be a known placeholder value).
 ADMIN_PASSWORD = "S3cret-Test-Pass"
 ADMIN_PATH = "secret-panel"
-JWT_SECRET = "unit-test-jwt-secret-value"
+JWT_SECRET = "unit-test-jwt-secret-value-0123456789-abcdef"
 
 _UPLOAD_DIR = tempfile.mkdtemp(prefix="cv-uploads-")
 

@@ -11,7 +11,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from .config import settings
+from .config import settings, validate_secrets
 from .database import init_db
 from .routers.admin import build_admin_router
 from .routers.contact import router as contact_router
@@ -44,16 +44,28 @@ async def lifespan(app: FastAPI):
 
 def create_app() -> FastAPI:
     """Application factory: build and configure the FastAPI instance."""
+    # Fail-fast: refuse to start with missing / placeholder / weak secrets.
+    validate_secrets(settings)
+
+    # Interactive docs and the OpenAPI schema are disabled by default. Leaving
+    # them enabled would expose the secret ADMIN_PATH (the admin routes are in
+    # the schema) to any unauthenticated client hitting /api/openapi.json.
+    docs_kwargs: dict[str, str | None] = (
+        {
+            "docs_url": "/api/docs",
+            "redoc_url": "/api/redoc",
+            "openapi_url": "/api/openapi.json",
+        }
+        if settings.ENABLE_DOCS
+        else {"docs_url": None, "redoc_url": None, "openapi_url": None}
+    )
+
     app = FastAPI(
         title="Multidiensten Company API",
         description="Backend API for the company website and admin panel.",
         version="1.0.0",
         lifespan=lifespan,
-        # Hide interactive docs in the default location; the admin path is the
-        # only "secret" surface, but keeping docs available aids development.
-        docs_url="/api/docs",
-        redoc_url=None,
-        openapi_url="/api/openapi.json",
+        **docs_kwargs,
     )
 
     # ------------------------------------------------------------------ #

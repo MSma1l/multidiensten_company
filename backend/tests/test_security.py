@@ -10,9 +10,10 @@ from fastapi.security import HTTPAuthorizationCredentials
 from jose import jwt
 
 from app import security
-from app.config import settings
+from app.config import Settings, settings, validate_secrets
 from app.security import (
     authenticate_admin,
+    client_ip,
     create_access_token,
     decode_access_token,
     get_current_admin,
@@ -24,6 +25,100 @@ from app.security import (
 )
 
 from conftest import ADMIN_PASSWORD, ADMIN_USERNAME
+
+
+# --------------------------------------------------------------------------- #
+# validate_secrets
+# --------------------------------------------------------------------------- #
+def _good_settings(**overrides) -> Settings:
+    base = dict(
+        JWT_SECRET="x" * 40,
+        ADMIN_PASSWORD="a-strong-password",
+        POSTGRES_PASSWORD="a-strong-db-password",
+        DATABASE_URL=None,
+    )
+    base.update(overrides)
+    return Settings(**base)
+
+
+def test_validate_secrets_accepts_strong_values():
+    # Should not raise.
+    validate_secrets(_good_settings())
+
+
+def test_validate_secrets_rejects_placeholder_jwt():
+    with pytest.raises(RuntimeError, match="JWT_SECRET"):
+        validate_secrets(_good_settings(JWT_SECRET="change-this-secret-in-production"))
+
+
+def test_validate_secrets_rejects_empty_jwt():
+    with pytest.raises(RuntimeError, match="JWT_SECRET"):
+        validate_secrets(_good_settings(JWT_SECRET=""))
+
+
+def test_validate_secrets_rejects_short_jwt():
+    with pytest.raises(RuntimeError, match="JWT_SECRET"):
+        validate_secrets(_good_settings(JWT_SECRET="too-short"))
+
+
+def test_validate_secrets_rejects_placeholder_admin_password():
+    with pytest.raises(RuntimeError, match="ADMIN_PASSWORD"):
+        validate_secrets(_good_settings(ADMIN_PASSWORD="changeme"))
+
+
+def test_validate_secrets_rejects_short_admin_password():
+    with pytest.raises(RuntimeError, match="ADMIN_PASSWORD"):
+        validate_secrets(_good_settings(ADMIN_PASSWORD="short"))
+
+
+def test_validate_secrets_rejects_placeholder_db_password():
+    with pytest.raises(RuntimeError, match="POSTGRES_PASSWORD"):
+        validate_secrets(_good_settings(POSTGRES_PASSWORD="apppassword"))
+
+
+def test_validate_secrets_skips_db_check_with_explicit_database_url():
+    # When DATABASE_URL is set the POSTGRES_* parts are unused, so the
+    # placeholder default must not trip the validation.
+    validate_secrets(
+        _good_settings(POSTGRES_PASSWORD="apppassword", DATABASE_URL="sqlite://")
+    )
+
+
+# --------------------------------------------------------------------------- #
+# client_ip (trusted IP resolution)
+# --------------------------------------------------------------------------- #
+class _FakeClient:
+    def __init__(self, host):
+        self.host = host
+
+
+class _FakeRequest:
+    def __init__(self, headers=None, host="10.0.0.1"):
+        self.headers = headers or {}
+        self.client = _FakeClient(host) if host is not None else None
+
+
+def test_client_ip_prefers_x_real_ip():
+    req = _FakeRequest(headers={"x-real-ip": "198.51.100.5"}, host="10.0.0.1")
+    assert client_ip(req) == "198.51.100.5"
+
+
+def test_client_ip_ignores_x_forwarded_for():
+    req = _FakeRequest(
+        headers={"x-forwarded-for": "1.2.3.4, 10.0.0.1"}, host="10.0.0.9"
+    )
+    # XFF is untrusted; falls back to the socket peer.
+    assert client_ip(req) == "10.0.0.9"
+
+
+def test_client_ip_falls_back_to_peer():
+    req = _FakeRequest(headers={}, host="203.0.113.10")
+    assert client_ip(req) == "203.0.113.10"
+
+
+def test_client_ip_none_when_no_client():
+    req = _FakeRequest(headers={}, host=None)
+    assert client_ip(req) is None
 
 
 # --------------------------------------------------------------------------- #

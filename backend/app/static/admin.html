@@ -6,22 +6,36 @@
   <meta name="robots" content="noindex, nofollow" />
   <title>Admin Panel</title>
   <style>
+    /* Light theme aligned with the public site design tokens. */
     :root {
-      --bg: #0d1117;
-      --bg-elev: #161b22;
-      --bg-elev-2: #1c2230;
-      --sidebar: #0a0e14;
-      --border: #2a3140;
-      --text: #e6edf3;
-      --text-dim: #8b949e;
-      --accent: #2f81f7;
-      --accent-hover: #4c93ff;
-      --accent-soft: rgba(47, 129, 247, 0.14);
-      --danger: #da3633;
-      --danger-hover: #f85149;
-      --success: #2ea043;
-      --radius: 10px;
-      --shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      --bg: #f5f7fa;
+      --surface: #ffffff;
+      --surface-2: #f0f3f7;
+      --sidebar-bg: #ffffff;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --text: #34495e;
+      --heading: #2c3e50;
+      --muted: #7f8c8d;
+      --primary: #1e3a8a;
+      --primary-light: #2d5aa9;
+      --primary-soft: #eaf0fb;
+      --danger: #d64545;
+      --danger-soft: #fdecec;
+      --success: #2e7d32;
+      --success-soft: #e8f5e9;
+      /* Bright accent palette for the friendly Guide cards. */
+      --accent-jobs: #2563eb;   --accent-jobs-soft: #e6efff;
+      --accent-msg:  #0d9488;   --accent-msg-soft:  #d8f3ef;
+      --accent-cv:   #7c3aed;   --accent-cv-soft:   #efe7fd;
+      --accent-info: #d97706;   --accent-info-soft: #fdf0db;
+      --accent-tip:  #db2777;   --accent-tip-soft:  #fde6f1;
+      /* Vivid help button. */
+      --help: #f59e0b; --help-strong: #f97316;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --shadow: 0 4px 16px rgba(30, 58, 138, 0.08);
+      --shadow-lg: 0 12px 32px rgba(30, 58, 138, 0.14);
       font-synthesis: none;
     }
     * { box-sizing: border-box; }
@@ -31,27 +45,30 @@
       background: var(--bg);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      font-size: 14px;
-      line-height: 1.5;
+      font-size: 15px;
+      line-height: 1.55;
       -webkit-font-smoothing: antialiased;
     }
-    a { color: var(--accent); }
+    a { color: var(--primary); }
+    h2, h3 { color: var(--heading); }
+
     button {
       font: inherit;
       cursor: pointer;
       border: none;
-      border-radius: 8px;
-      padding: 9px 16px;
-      transition: background .15s ease, opacity .15s ease, color .15s ease, border-color .15s ease;
+      border-radius: var(--radius-sm);
+      padding: 11px 18px;
+      font-weight: 600;
+      transition: background .15s ease, opacity .15s ease, color .15s ease, border-color .15s ease, box-shadow .15s ease;
     }
-    button:disabled { opacity: .6; cursor: not-allowed; }
-    .btn-primary { background: var(--accent); color: #fff; }
-    .btn-primary:hover:not(:disabled) { background: var(--accent-hover); }
-    .btn-danger { background: transparent; color: var(--danger-hover); border: 1px solid var(--border); }
+    button:disabled { opacity: .55; cursor: not-allowed; }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover:not(:disabled) { background: var(--primary-light); }
+    .btn-danger { background: #fff; color: var(--danger); border: 1.5px solid var(--border-strong); }
     .btn-danger:hover:not(:disabled) { background: var(--danger); color: #fff; border-color: var(--danger); }
-    .btn-ghost { background: var(--bg-elev-2); color: var(--text); border: 1px solid var(--border); }
-    .btn-ghost:hover:not(:disabled) { background: var(--border); }
-    .btn-sm { padding: 6px 12px; font-size: 13px; }
+    .btn-ghost { background: #fff; color: var(--heading); border: 1.5px solid var(--border-strong); }
+    .btn-ghost:hover:not(:disabled) { background: var(--surface-2); }
+    .btn-sm { padding: 8px 14px; font-size: 14px; }
     .hidden { display: none !important; }
 
     /* ---------- Login ---------- */
@@ -61,44 +78,102 @@
       align-items: center;
       justify-content: center;
       padding: 24px;
+      background: linear-gradient(135deg, #eef2fb 0%, #f5f7fa 100%);
     }
     .card {
       width: 100%;
-      max-width: 380px;
-      background: var(--bg-elev);
+      max-width: 400px;
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 32px;
+      box-shadow: var(--shadow-lg);
+      padding: 36px;
     }
-    .card h1 { margin: 0 0 4px; font-size: 20px; }
-    .card .subtitle { margin: 0 0 24px; color: var(--text-dim); font-size: 13px; }
-    .field { margin-bottom: 16px; }
-    .field label { display: block; margin-bottom: 6px; color: var(--text-dim); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+    .card h1 { margin: 0 0 4px; font-size: 22px; color: var(--heading); }
+    .card .subtitle { margin: 0 0 26px; color: var(--muted); font-size: 14px; }
+
+    .field { margin-bottom: 18px; }
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--heading);
+      font-size: 14px;
+      font-weight: 600;
+    }
     .field input, .field textarea, .field select {
       width: 100%;
-      padding: 10px 12px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      padding: 12px 14px;
+      min-height: 50px;
+      background: #fff;
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-sm);
       color: var(--text);
       font: inherit;
+      font-size: 16px; /* 16px avoids iOS zoom-on-focus */
       outline: none;
     }
-    .field textarea { resize: vertical; min-height: 84px; }
-    .field input:focus, .field textarea:focus, .field select:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 2px rgba(47,129,247,.25);
+    .field textarea { resize: vertical; min-height: 96px; }
+    /* Bigger, simpler dropdowns: large hit area + clear custom chevron. */
+    .field select {
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      padding-right: 44px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%232c3e50' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      background-size: 16px;
     }
+    .field select option { font-size: 16px; padding: 8px; }
+    .field input:focus, .field textarea:focus, .field select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(30, 58, 138, .14);
+    }
+    .hint { margin-top: 6px; font-size: 13px; color: var(--muted); }
     #login-form button { width: 100%; margin-top: 8px; }
-    .error-msg { color: var(--danger-hover); font-size: 13px; margin-top: 12px; min-height: 18px; }
+    .error-msg { color: var(--danger); font-size: 14px; margin-top: 14px; min-height: 18px; }
 
     /* ---------- App shell ---------- */
     #app-view { display: flex; min-height: 100vh; }
+
+    /* Mobile top bar with hamburger (hidden on desktop). */
+    .topbar {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
+    .topbar .brand-mini { font-weight: 700; color: var(--heading); font-size: 16px; }
+    .hamburger {
+      width: 44px; height: 44px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 0;
+    }
+    .hamburger span { display: block; position: relative; width: 20px; height: 2px; background: var(--heading); }
+    .hamburger span::before, .hamburger span::after {
+      content: ""; position: absolute; left: 0; width: 20px; height: 2px; background: var(--heading);
+    }
+    .hamburger span::before { top: -6px; }
+    .hamburger span::after { top: 6px; }
+
+    .backdrop {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(15, 23, 42, .4);
+      z-index: 40;
+    }
+    .backdrop.show { display: block; }
+
     .sidebar {
-      width: 240px;
+      width: 248px;
       flex-shrink: 0;
-      background: var(--sidebar);
+      background: var(--sidebar-bg);
       border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
@@ -107,37 +182,39 @@
       height: 100vh;
     }
     .sidebar .brand {
-      padding: 22px 20px;
-      font-size: 16px;
-      font-weight: 600;
+      padding: 24px 20px;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--heading);
       border-bottom: 1px solid var(--border);
-      letter-spacing: .02em;
     }
-    .sidebar .brand small { display: block; color: var(--text-dim); font-size: 12px; font-weight: 400; margin-top: 2px; }
-    .nav { display: flex; flex-direction: column; padding: 12px 10px; gap: 4px; flex: 1; }
+    .sidebar .brand small { display: block; color: var(--muted); font-size: 12px; font-weight: 500; margin-top: 3px; }
+    .nav { display: flex; flex-direction: column; padding: 14px 12px; gap: 6px; flex: 1; }
     .nav-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 8px;
-      color: var(--text-dim);
+      gap: 12px;
+      padding: 13px 14px;
+      border-radius: var(--radius-sm);
+      color: var(--text);
       background: transparent;
       text-align: left;
       width: 100%;
-      font-size: 14px;
+      font-size: 15px;
+      font-weight: 600;
+      border-left: 3px solid transparent;
     }
-    .nav-item:hover { background: var(--bg-elev-2); color: var(--text); }
-    .nav-item.active { background: var(--accent-soft); color: var(--accent-hover); }
-    .nav-item .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; opacity: .8; }
-    .sidebar-footer { padding: 12px; border-top: 1px solid var(--border); }
-    .sidebar-footer .me { color: var(--text-dim); font-size: 12px; padding: 0 4px 10px; word-break: break-word; }
+    .nav-item:hover { background: var(--surface-2); }
+    .nav-item.active { background: var(--primary-soft); color: var(--primary); border-left-color: var(--primary); }
+    .nav-item .dot { width: 9px; height: 9px; border-radius: 50%; background: currentColor; opacity: .75; }
+    .sidebar-footer { padding: 14px; border-top: 1px solid var(--border); }
+    .sidebar-footer .me { color: var(--muted); font-size: 13px; padding: 0 4px 10px; word-break: break-word; }
     .sidebar-footer button { width: 100%; }
 
     .main {
       flex: 1;
       min-width: 0;
-      padding: 28px 32px;
+      padding: 30px 34px;
     }
     .page-head {
       display: flex;
@@ -147,79 +224,91 @@
       margin-bottom: 22px;
       flex-wrap: wrap;
     }
-    .page-head h2 { margin: 0; font-size: 20px; }
+    .page-head h2 { margin: 0; font-size: 22px; }
+    .lead { color: var(--muted); margin: -8px 0 22px; max-width: 720px; }
     .toolbar { display: flex; gap: 8px; flex-wrap: wrap; }
 
     .badge {
       display: inline-block;
-      background: var(--bg-elev-2);
-      border: 1px solid var(--border);
+      background: var(--primary-soft);
       border-radius: 999px;
-      padding: 2px 10px;
-      font-size: 12px;
-      color: var(--text-dim);
+      padding: 2px 11px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
       margin-left: 8px;
       vertical-align: middle;
     }
 
     .panel {
-      background: var(--bg-elev);
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       margin-bottom: 22px;
+      box-shadow: var(--shadow);
     }
     .panel-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 18px;
+      padding: 16px 20px;
       border-bottom: 1px solid var(--border);
       gap: 12px;
     }
-    .panel-head h3 { margin: 0; font-size: 15px; }
-    .panel-body { padding: 18px; }
+    .panel-head h3 { margin: 0; font-size: 16px; }
+    .panel-body { padding: 20px; }
 
     .form-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
+      gap: 18px;
     }
     .form-grid .full { grid-column: 1 / -1; }
-    .radio-row { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
-    .radio-row label { display: inline-flex; align-items: center; gap: 6px; color: var(--text); font-size: 14px; text-transform: none; letter-spacing: normal; margin: 0; cursor: pointer; }
-    .radio-row input { width: auto; }
-    .form-actions { display: flex; gap: 10px; margin-top: 18px; align-items: center; }
-    .form-note { font-size: 13px; min-height: 18px; }
-    .form-note.err { color: var(--danger-hover); }
+    .radio-row { display: flex; gap: 14px; align-items: stretch; flex-wrap: wrap; }
+    /* Salary-type choices rendered as big, simple selectable cards. */
+    .radio-row label {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--heading); font-size: 15px; font-weight: 600;
+      margin: 0; cursor: pointer;
+      padding: 12px 18px; border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-sm); background: #fff;
+    }
+    .radio-row label:hover { background: var(--surface-2); }
+    .radio-row input { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
+    .form-actions { display: flex; gap: 12px; margin-top: 20px; align-items: center; flex-wrap: wrap; }
+    .form-note { font-size: 14px; min-height: 18px; font-weight: 600; }
+    .form-note.err { color: var(--danger); }
     .form-note.ok { color: var(--success); }
 
     .table-wrap {
-      background: var(--bg-elev);
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       overflow-x: auto;
+      box-shadow: var(--shadow);
     }
     table { width: 100%; border-collapse: collapse; min-width: 760px; }
     thead th {
       text-align: left;
-      font-size: 11px;
+      font-size: 12px;
       text-transform: uppercase;
-      letter-spacing: .05em;
-      color: var(--text-dim);
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
+      letter-spacing: .04em;
+      color: var(--muted);
+      padding: 14px 18px;
+      border-bottom: 2px solid var(--border);
       white-space: nowrap;
+      background: var(--surface-2);
     }
     tbody td {
-      padding: 12px 16px;
+      padding: 14px 18px;
       border-bottom: 1px solid var(--border);
       vertical-align: top;
     }
     tbody tr:last-child td { border-bottom: none; }
-    tbody tr:hover { background: var(--bg-elev-2); }
+    tbody tr:hover { background: var(--surface-2); }
     .msg-preview {
       max-width: 320px;
-      color: var(--text-dim);
+      color: var(--text);
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
@@ -228,25 +317,139 @@
       cursor: help;
     }
     .nowrap { white-space: nowrap; }
-    .row-actions { display: flex; gap: 6px; }
-    .empty, .loading { padding: 40px; text-align: center; color: var(--text-dim); }
+    .row-actions { display: flex; gap: 8px; }
+    .empty, .loading { padding: 44px; text-align: center; color: var(--muted); }
     .tag {
       display: inline-block;
-      background: var(--bg-elev-2);
-      border: 1px solid var(--border);
+      background: var(--primary-soft);
+      color: var(--primary);
       border-radius: 6px;
-      padding: 1px 8px;
-      font-size: 12px;
+      padding: 2px 10px;
+      font-size: 13px;
+      font-weight: 600;
       text-transform: capitalize;
     }
 
-    @media (max-width: 820px) {
+    /* ---------- Language switch ---------- */
+    .lang-switch {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 8px; margin-bottom: 12px; padding: 0 4px;
+    }
+    .lang-cap {
+      font-size: 12px; color: var(--muted); font-weight: 700;
+      text-transform: uppercase; letter-spacing: .05em;
+    }
+    .lang-btns { display: inline-flex; gap: 6px; }
+    .lang-btn {
+      padding: 6px 12px; font-size: 13px; font-weight: 800;
+      border: 1.5px solid var(--border-strong); background: #fff;
+      color: var(--heading); border-radius: var(--radius-sm); min-width: 42px;
+    }
+    .lang-btn:hover { background: var(--surface-2); }
+    .lang-btn.active {
+      background: var(--primary); color: #fff; border-color: var(--primary);
+      box-shadow: 0 2px 8px rgba(30,58,138,.25);
+    }
+
+    /* ---------- Guide (visual cards) ---------- */
+    .guide-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .guide-card {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--c, var(--primary));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px 22px;
+    }
+    .guide-card.accent-jobs { --c: var(--accent-jobs); --cs: var(--accent-jobs-soft); }
+    .guide-card.accent-msg  { --c: var(--accent-msg);  --cs: var(--accent-msg-soft); }
+    .guide-card.accent-cv   { --c: var(--accent-cv);   --cs: var(--accent-cv-soft); }
+    .guide-card.accent-info { --c: var(--accent-info); --cs: var(--accent-info-soft); }
+    .guide-card.full { grid-column: 1 / -1; border-top-color: var(--accent-tip); }
+    .guide-icon {
+      width: 56px; height: 56px; border-radius: 16px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 30px; line-height: 1;
+      background: var(--cs, var(--primary-soft));
+      margin-bottom: 14px;
+    }
+    .guide-card h3 { margin: 0 0 12px; font-size: 19px; color: var(--heading); }
+    .guide-card .g-line { margin: 0 0 10px; color: var(--text); }
+    .guide-card .g-label {
+      display: inline; font-weight: 800; color: var(--c, var(--primary));
+      margin-right: 4px;
+    }
+    .guide-card ol, .guide-card ul { margin: 14px 0 0; padding-left: 22px; }
+    .guide-card li { margin-bottom: 9px; }
+    .guide-card li::marker { color: var(--c, var(--primary)); font-weight: 700; }
+    .guide-card li strong { color: var(--heading); }
+    .callout {
+      display: flex; align-items: flex-start; gap: 12px;
+      background: var(--accent-tip-soft);
+      border-left: 4px solid var(--accent-tip);
+      border-radius: var(--radius-sm);
+      padding: 16px 18px;
+      color: var(--heading);
+    }
+    .callout .callout-ico { font-size: 24px; line-height: 1; }
+    .callout strong { color: var(--accent-tip); }
+
+    /* ---------- Floating help button (bottom-left) ---------- */
+    .help-fab {
+      position: fixed;
+      left: 20px; bottom: 20px;
+      z-index: 60;
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 22px 14px 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--help) 0%, var(--help-strong) 100%);
+      color: #3a2300;
+      font-size: 16px; font-weight: 800;
+      box-shadow: 0 8px 22px rgba(245, 158, 11, .45);
+      animation: helpPulse 2.6s ease-in-out infinite;
+    }
+    .help-fab .q {
+      width: 30px; height: 30px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(255, 255, 255, .92);
+      color: var(--help-strong);
+      font-size: 18px; font-weight: 900;
+    }
+    .help-fab:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px rgba(245, 158, 11, .58);
+      animation: none;
+    }
+    @keyframes helpPulse {
+      0%, 100% { box-shadow: 0 8px 22px rgba(245, 158, 11, .42); }
+      50%      { box-shadow: 0 10px 32px rgba(245, 158, 11, .72); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .help-fab { animation: none; }
+    }
+
+    @media (max-width: 860px) {
+      .topbar { display: flex; }
       #app-view { flex-direction: column; }
-      .sidebar { width: 100%; height: auto; position: static; flex-direction: column; }
-      .nav { flex-direction: row; flex-wrap: wrap; flex: none; }
-      .nav-item { width: auto; }
+      .backdrop { display: none; }
+      .sidebar {
+        position: fixed;
+        top: 0; left: 0;
+        height: 100vh;
+        width: 270px;
+        z-index: 50;
+        transform: translateX(-100%);
+        transition: transform .22s ease;
+        box-shadow: var(--shadow-lg);
+      }
+      .sidebar.open { transform: translateX(0); }
       .main { padding: 20px 16px; }
       .form-grid { grid-template-columns: 1fr; }
+      .guide-grid { grid-template-columns: 1fr; }
+      .page-head h2 { font-size: 20px; }
+      .help-fab { left: 14px; bottom: 14px; padding: 12px 18px 12px 12px; font-size: 15px; }
+      .help-fab .q { width: 26px; height: 26px; font-size: 16px; }
     }
   </style>
 </head>
@@ -254,18 +457,18 @@
   <!-- ===================== LOGIN ===================== -->
   <section id="login-view" class="hidden">
     <div class="card">
-      <h1>Admin Panel</h1>
-      <p class="subtitle">Sign in to continue</p>
+      <h1 data-i18n="login_title">Admin Panel</h1>
+      <p class="subtitle" data-i18n="login_subtitle">Sign in to continue</p>
       <form id="login-form" autocomplete="off">
         <div class="field">
-          <label for="username">Username</label>
+          <label for="username" data-i18n="login_username">Username</label>
           <input id="username" name="username" type="text" required autocomplete="username" />
         </div>
         <div class="field">
-          <label for="password">Password</label>
+          <label for="password" data-i18n="login_password">Password</label>
           <input id="password" name="password" type="password" required autocomplete="current-password" />
         </div>
-        <button type="submit" class="btn-primary" id="login-btn">Sign in</button>
+        <button type="submit" class="btn-primary" id="login-btn" data-i18n="login_btn">Sign in</button>
         <div class="error-msg" id="login-error"></div>
       </form>
     </div>
@@ -273,115 +476,139 @@
 
   <!-- ===================== APP ===================== -->
   <section id="app-view" class="hidden">
-    <aside class="sidebar">
+    <!-- Mobile top bar -->
+    <div class="topbar">
+      <button class="hamburger" id="menu-toggle" aria-label="Open menu" data-i18n-aria-label="menu_open"><span></span></button>
+      <span class="brand-mini" data-i18n="brand_mini">Admin Panel</span>
+    </div>
+
+    <div class="backdrop" id="backdrop"></div>
+
+    <aside class="sidebar" id="sidebar">
       <div class="brand">
-        Admin Panel
-        <small>Randstad</small>
+        <span data-i18n="brand">Admin Panel</span>
+        <small data-i18n="brand_sub">Randstad</small>
       </div>
       <nav class="nav">
-        <button class="nav-item active" data-tab="jobs"><span class="dot"></span> Jobs</button>
-        <button class="nav-item" data-tab="messages"><span class="dot"></span> Contact Messages</button>
-        <button class="nav-item" data-tab="cvs"><span class="dot"></span> CVs / Applications</button>
+        <button class="nav-item active" data-tab="guide"><span class="dot"></span> <span data-i18n="nav_guide">Guide</span></button>
+        <button class="nav-item" data-tab="jobs"><span class="dot"></span> <span data-i18n="nav_jobs">Jobs</span></button>
+        <button class="nav-item" data-tab="messages"><span class="dot"></span> <span data-i18n="nav_messages">Contact Messages</span></button>
+        <button class="nav-item" data-tab="cvs"><span class="dot"></span> <span data-i18n="nav_cvs">CVs / Applications</span></button>
       </nav>
       <div class="sidebar-footer">
+        <div class="lang-switch" role="group" aria-label="Language">
+          <span class="lang-cap" data-i18n="lang_label">Language</span>
+          <div class="lang-btns">
+            <button type="button" class="lang-btn" data-lang="en">EN</button>
+            <button type="button" class="lang-btn" data-lang="nl">NL</button>
+          </div>
+        </div>
         <div class="me" id="me-label"></div>
-        <button class="btn-ghost" id="logout-btn">Log out</button>
+        <button class="btn-ghost" id="logout-btn" data-i18n="logout">Log out</button>
       </div>
     </aside>
 
     <main class="main">
+      <!-- ---------- TAB: GUIDE ---------- -->
+      <section id="tab-guide" class="tab">
+        <div id="guide-content"><!-- rendered by renderGuide() in the current language --></div>
+      </section>
+
       <!-- ---------- TAB: JOBS ---------- -->
-      <section id="tab-jobs" class="tab">
+      <section id="tab-jobs" class="tab hidden">
         <div class="page-head">
-          <h2>Jobs <span class="badge" id="jobs-count">0</span></h2>
+          <h2><span data-i18n="jobs_heading">Jobs</span> <span class="badge" id="jobs-count">0</span></h2>
           <div class="toolbar">
-            <button class="btn-primary btn-sm" id="toggle-job-form">Create job</button>
-            <button class="btn-ghost btn-sm" id="jobs-refresh">Refresh</button>
+            <button class="btn-primary btn-sm" id="toggle-job-form" data-i18n="btn_create_job">Create job</button>
+            <button class="btn-ghost btn-sm" id="jobs-refresh" data-i18n="btn_refresh">Refresh</button>
           </div>
         </div>
+        <p class="lead" data-i18n="jobs_lead">Publish and manage the vacancies shown on the website. Click Create job to add one.</p>
 
         <div class="panel hidden" id="job-form-panel">
           <div class="panel-head">
             <h3 id="job-form-title">Create job</h3>
-            <button class="btn-ghost btn-sm" id="job-form-cancel">Cancel</button>
+            <button class="btn-ghost btn-sm" id="job-form-cancel" data-i18n="btn_cancel">Cancel</button>
           </div>
           <div class="panel-body">
             <form id="job-form">
               <input type="hidden" id="job-id" />
               <div class="form-grid">
                 <div class="field">
-                  <label for="titleNl">Title (NL)</label>
-                  <input id="titleNl" type="text" />
+                  <label for="titleNl" data-i18n="f_title_nl">Title (NL)</label>
+                  <input id="titleNl" type="text" placeholder="e.g. Senior Elektricien" data-i18n-placeholder="ph_title_nl" />
                 </div>
                 <div class="field">
-                  <label for="titleEn">Title (EN)</label>
-                  <input id="titleEn" type="text" />
+                  <label for="titleEn" data-i18n="f_title_en">Title (EN)</label>
+                  <input id="titleEn" type="text" placeholder="e.g. Senior Electrician" data-i18n-placeholder="ph_title_en" />
                 </div>
                 <div class="field">
-                  <label for="descriptionNl">Description (NL)</label>
-                  <textarea id="descriptionNl"></textarea>
+                  <label for="descriptionNl" data-i18n="f_desc_nl">Description (NL)</label>
+                  <textarea id="descriptionNl" placeholder="Describe the role in Dutch" data-i18n-placeholder="ph_desc_nl"></textarea>
                 </div>
                 <div class="field">
-                  <label for="descriptionEn">Description (EN)</label>
-                  <textarea id="descriptionEn"></textarea>
+                  <label for="descriptionEn" data-i18n="f_desc_en">Description (EN)</label>
+                  <textarea id="descriptionEn" placeholder="Describe the role in English" data-i18n-placeholder="ph_desc_en"></textarea>
                 </div>
 
                 <div class="field full">
-                  <label>Salary type</label>
+                  <label data-i18n="f_salary_type">Salary type</label>
                   <div class="radio-row">
-                    <label><input type="radio" name="salaryType" value="range" checked /> Range</label>
-                    <label><input type="radio" name="salaryType" value="fixed" /> Fixed amount</label>
+                    <label><input type="radio" name="salaryType" value="range" checked /> <span data-i18n="salary_type_range">Range (min – max)</span></label>
+                    <label><input type="radio" name="salaryType" value="fixed" /> <span data-i18n="salary_type_fixed">Fixed amount</span></label>
                   </div>
+                  <p class="hint" data-i18n="hint_salary_type">Choose Range to show a salary band, or Fixed amount for a single figure.</p>
                 </div>
 
                 <div class="field" id="salary-min-wrap">
-                  <label for="salaryMin">Salary min (€)</label>
-                  <input id="salaryMin" type="number" min="0" step="50" />
+                  <label for="salaryMin" data-i18n="f_salary_min">Salary min (€)</label>
+                  <input id="salaryMin" type="number" min="0" step="50" placeholder="2500" />
                 </div>
                 <div class="field" id="salary-max-wrap">
-                  <label for="salaryMax">Salary max (€)</label>
-                  <input id="salaryMax" type="number" min="0" step="50" />
+                  <label for="salaryMax" data-i18n="f_salary_max">Salary max (€)</label>
+                  <input id="salaryMax" type="number" min="0" step="50" placeholder="3200" />
                 </div>
                 <div class="field hidden" id="salary-amount-wrap">
-                  <label for="salaryAmount">Salary amount (€)</label>
-                  <input id="salaryAmount" type="number" min="0" step="50" />
+                  <label for="salaryAmount" data-i18n="f_salary_amount">Salary amount (€)</label>
+                  <input id="salaryAmount" type="number" min="0" step="50" placeholder="3000" />
                 </div>
 
                 <div class="field">
-                  <label for="salaryRange">Salary bracket</label>
+                  <label for="salaryRange" data-i18n="f_salary_bracket">Salary bracket</label>
                   <select id="salaryRange">
                     <option value="0-2000">€0 - €2.000</option>
                     <option value="2000-3000">€2.000 - €3.000</option>
                     <option value="3000-4000">€3.000 - €4.000</option>
                     <option value="4000+">€4.000+</option>
                   </select>
+                  <p class="hint" data-i18n="hint_salary_bracket">Used by the salary filter on the website.</p>
                 </div>
                 <div class="field">
-                  <label for="experienceYears">Experience (years)</label>
-                  <input id="experienceYears" type="number" min="0" step="1" />
+                  <label for="experienceYears" data-i18n="f_experience">Experience (years)</label>
+                  <input id="experienceYears" type="number" min="0" step="1" placeholder="3" />
                 </div>
 
                 <div class="field">
-                  <label for="level">Level</label>
+                  <label for="level" data-i18n="f_level">Level</label>
                   <select id="level">
-                    <option value="junior">junior</option>
-                    <option value="middle">middle</option>
-                    <option value="senior">senior</option>
+                    <option value="junior" data-i18n="level_junior">Junior</option>
+                    <option value="middle" data-i18n="level_middle">Middle</option>
+                    <option value="senior" data-i18n="level_senior">Senior</option>
                   </select>
                 </div>
                 <div class="field">
-                  <label for="hoursPerWeek">Hours per week</label>
+                  <label for="hoursPerWeek" data-i18n="f_hours">Hours per week</label>
                   <select id="hoursPerWeek">
-                    <option value="32">32</option>
-                    <option value="36">36</option>
-                    <option value="38">38</option>
-                    <option value="40" selected>40</option>
+                    <option value="32" data-i18n="hours_32">32 hours</option>
+                    <option value="36" data-i18n="hours_36">36 hours</option>
+                    <option value="38" data-i18n="hours_38">38 hours</option>
+                    <option value="40" selected data-i18n="hours_40">40 hours</option>
                   </select>
                 </div>
 
                 <div class="field">
-                  <label for="location">Location</label>
-                  <input id="location" list="location-options" placeholder="Amsterdam" />
+                  <label for="location" data-i18n="f_location">Location</label>
+                  <input id="location" list="location-options" placeholder="Amsterdam" data-i18n-placeholder="ph_location" />
                   <datalist id="location-options">
                     <option value="Amsterdam"></option>
                     <option value="Rotterdam"></option>
@@ -390,7 +617,7 @@
                   </datalist>
                 </div>
                 <div class="field">
-                  <label for="company">Company</label>
+                  <label for="company" data-i18n="f_company">Company</label>
                   <input id="company" type="text" value="Randstad" />
                 </div>
               </div>
@@ -404,78 +631,86 @@
         </div>
 
         <div class="table-wrap">
-          <div id="jobs-loading" class="loading">Loading…</div>
+          <div id="jobs-loading" class="loading" data-i18n="loading">Loading…</div>
           <table id="jobs-table" class="hidden">
             <thead>
               <tr>
-                <th>Title (EN)</th>
-                <th>Level</th>
-                <th>Location</th>
-                <th>Hours</th>
-                <th>Salary bracket</th>
+                <th data-i18n="th_title_en">Title (EN)</th>
+                <th data-i18n="th_level">Level</th>
+                <th data-i18n="th_location">Location</th>
+                <th data-i18n="th_hours">Hours</th>
+                <th data-i18n="th_salary_bracket">Salary bracket</th>
                 <th></th>
               </tr>
             </thead>
             <tbody id="jobs-body"></tbody>
           </table>
-          <div id="jobs-empty" class="empty hidden">No jobs yet. Create your first vacancy.</div>
+          <div id="jobs-empty" class="empty hidden" data-i18n="jobs_empty">No jobs yet. Create your first vacancy.</div>
         </div>
       </section>
 
       <!-- ---------- TAB: MESSAGES ---------- -->
       <section id="tab-messages" class="tab hidden">
         <div class="page-head">
-          <h2>Contact Messages <span class="badge" id="messages-count">0</span></h2>
+          <h2><span data-i18n="messages_heading">Contact Messages</span> <span class="badge" id="messages-count">0</span></h2>
           <div class="toolbar">
-            <button class="btn-ghost btn-sm" id="messages-refresh">Refresh</button>
+            <button class="btn-ghost btn-sm" id="messages-refresh" data-i18n="btn_refresh">Refresh</button>
           </div>
         </div>
+        <p class="lead" data-i18n="messages_lead">Messages submitted through the website's contact form. Reply by email, download an attached CV, or delete handled messages.</p>
         <div class="table-wrap">
-          <div id="messages-loading" class="loading">Loading…</div>
+          <div id="messages-loading" class="loading" data-i18n="loading">Loading…</div>
           <table id="messages-table" class="hidden">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Message</th>
-                <th>Submitted</th>
-                <th>CV</th>
+                <th data-i18n="th_name">Name</th>
+                <th data-i18n="th_email">Email</th>
+                <th data-i18n="th_phone">Phone</th>
+                <th data-i18n="th_message">Message</th>
+                <th data-i18n="th_submitted">Submitted</th>
+                <th data-i18n="th_cv">CV</th>
                 <th></th>
               </tr>
             </thead>
             <tbody id="messages-body"></tbody>
           </table>
-          <div id="messages-empty" class="empty hidden">No contact messages yet.</div>
+          <div id="messages-empty" class="empty hidden" data-i18n="messages_empty">No contact messages yet.</div>
         </div>
       </section>
 
       <!-- ---------- TAB: CVS ---------- -->
       <section id="tab-cvs" class="tab hidden">
         <div class="page-head">
-          <h2>CVs / Applications <span class="badge" id="cvs-count">0</span></h2>
+          <h2><span data-i18n="cvs_heading">CVs / Applications</span> <span class="badge" id="cvs-count">0</span></h2>
           <div class="toolbar">
-            <button class="btn-ghost btn-sm" id="cvs-refresh">Refresh</button>
+            <button class="btn-ghost btn-sm" id="cvs-refresh" data-i18n="btn_refresh">Refresh</button>
           </div>
         </div>
+        <p class="lead" data-i18n="cvs_lead">Only the submissions that include a CV, so you can review applicants quickly.</p>
         <div class="table-wrap">
-          <div id="cvs-loading" class="loading">Loading…</div>
+          <div id="cvs-loading" class="loading" data-i18n="loading">Loading…</div>
           <table id="cvs-table" class="hidden">
             <thead>
               <tr>
-                <th>Applicant</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Submitted</th>
-                <th>CV</th>
+                <th data-i18n="th_applicant">Applicant</th>
+                <th data-i18n="th_email">Email</th>
+                <th data-i18n="th_phone">Phone</th>
+                <th data-i18n="th_submitted">Submitted</th>
+                <th data-i18n="th_cv">CV</th>
               </tr>
             </thead>
             <tbody id="cvs-body"></tbody>
           </table>
-          <div id="cvs-empty" class="empty hidden">No CVs submitted yet.</div>
+          <div id="cvs-empty" class="empty hidden" data-i18n="cvs_empty">No CVs submitted yet.</div>
         </div>
       </section>
     </main>
+
+    <!-- Floating help button (visible on all tabs except Guide, only when logged in) -->
+    <button class="help-fab" id="help-fab" type="button">
+      <span class="q" aria-hidden="true">?</span>
+      <span data-i18n="help_btn">Need help?</span>
+    </button>
   </section>
 
   <script>
@@ -525,6 +760,423 @@
       return Boolean(r.hasCv ?? r.has_cv ?? r.cv_filename ?? r.cvFilename);
     }
 
+    // =====================================================
+    // I18N  (English + Dutch). Every visible string lives here.
+    // All values below are STATIC literals we author — never server data —
+    // so they are safe to assign via textContent or interpolate into markup.
+    // Any dynamic/server value is still routed through esc().
+    // =====================================================
+    const I18N = {
+      en: {
+        // login
+        login_title: "Admin Panel",
+        login_subtitle: "Sign in to continue",
+        login_username: "Username",
+        login_password: "Password",
+        login_btn: "Sign in",
+        login_invalid: "Invalid username or password.",
+        login_throttled: "Too many attempts. Please try again later.",
+        login_network: "Network error. Please try again.",
+        // chrome
+        brand: "Admin Panel",
+        brand_sub: "Randstad",
+        brand_mini: "Admin Panel",
+        menu_open: "Open menu",
+        nav_guide: "Guide",
+        nav_jobs: "Jobs",
+        nav_messages: "Contact Messages",
+        nav_cvs: "CVs / Applications",
+        logout: "Log out",
+        signed_in_as: "Signed in as {user}",
+        lang_label: "Language",
+        help_btn: "Need help?",
+        loading: "Loading…",
+        // jobs page
+        jobs_heading: "Jobs",
+        jobs_lead: "Publish and manage the vacancies shown on the website. Click “Create job” to add one.",
+        btn_create_job: "Create job",
+        btn_refresh: "Refresh",
+        btn_cancel: "Cancel",
+        // job form
+        job_form_create_title: "Create job",
+        job_form_edit_title: "Edit job",
+        f_title_nl: "Title (NL)",
+        f_title_en: "Title (EN)",
+        f_desc_nl: "Description (NL)",
+        f_desc_en: "Description (EN)",
+        ph_title_nl: "e.g. Senior Elektricien",
+        ph_title_en: "e.g. Senior Electrician",
+        ph_desc_nl: "Describe the role in Dutch",
+        ph_desc_en: "Describe the role in English",
+        f_salary_type: "Salary type",
+        salary_type_range: "Range (min – max)",
+        salary_type_fixed: "Fixed amount",
+        hint_salary_type: "Choose Range to show a salary band, or Fixed amount for a single figure.",
+        f_salary_min: "Salary min (€)",
+        f_salary_max: "Salary max (€)",
+        f_salary_amount: "Salary amount (€)",
+        f_salary_bracket: "Salary bracket",
+        hint_salary_bracket: "Used by the salary filter on the website.",
+        f_experience: "Experience (years)",
+        f_level: "Level",
+        level_junior: "Junior",
+        level_middle: "Middle",
+        level_senior: "Senior",
+        f_hours: "Hours per week",
+        hours_32: "32 hours",
+        hours_36: "36 hours",
+        hours_38: "38 hours",
+        hours_40: "40 hours",
+        f_location: "Location",
+        ph_location: "Amsterdam",
+        f_company: "Company",
+        btn_save_job: "Save job",
+        btn_update_job: "Update job",
+        note_job_created: "Job created.",
+        note_job_updated: "Job updated.",
+        note_job_save_err: "Could not save the job. Please check the fields.",
+        note_network: "Network error. Please try again.",
+        // jobs table
+        th_title_en: "Title (EN)",
+        th_level: "Level",
+        th_location: "Location",
+        th_hours: "Hours",
+        th_salary_bracket: "Salary bracket",
+        jobs_empty: "No jobs yet. Create your first vacancy.",
+        btn_edit: "Edit",
+        btn_delete: "Delete",
+        confirm_delete_job: "Delete this job? This cannot be undone.",
+        err_delete_job: "Could not delete the job.",
+        err_load_jobs: "Could not load jobs.",
+        // messages
+        messages_heading: "Contact Messages",
+        messages_lead: "Messages submitted through the website's contact form. Reply by email, download an attached CV, or delete handled messages.",
+        th_name: "Name",
+        th_email: "Email",
+        th_phone: "Phone",
+        th_message: "Message",
+        th_submitted: "Submitted",
+        th_cv: "CV",
+        messages_empty: "No contact messages yet.",
+        btn_download: "Download",
+        confirm_delete_sub: "Delete this submission? This cannot be undone.",
+        err_delete_sub: "Could not delete the submission.",
+        err_load_messages: "Could not load contact messages.",
+        err_download_cv: "Could not download the CV.",
+        // cvs
+        cvs_heading: "CVs / Applications",
+        cvs_lead: "Only the submissions that include a CV, so you can review applicants quickly.",
+        th_applicant: "Applicant",
+        cvs_empty: "No CVs submitted yet.",
+        btn_download_cv: "Download CV",
+        err_load_cvs: "Could not load applications.",
+        // guide (visual cards)
+        guide: {
+          heading: "Welcome to your Admin Panel",
+          lead: "This panel is where you manage everything that powers the website. Use the menu on the left to switch between sections. Below is a short, friendly guide to what each part does and why it matters.",
+          whatLabel: "What it does:",
+          whyLabel: "Why it matters:",
+          cards: [
+            {
+              accent: "jobs", icon: "💼", title: "Jobs", ordered: true,
+              what: "Create and manage the vacancies that appear on the public website.",
+              why: "These are what candidates see and search — good details mean the right people find the role.",
+              list: [
+                "Open <strong>Jobs</strong> and click <strong>Create job</strong>.",
+                "Fill in the <strong>Title</strong> and <strong>Description</strong> in both <strong>Dutch</strong> and <strong>English</strong> — visitors see the text in their own language.",
+                "Choose a <strong>Salary type</strong>: a <strong>Range</strong> (min–max) or a single <strong>Fixed amount</strong>.",
+                "Pick the <strong>Salary bracket</strong>, <strong>Level</strong>, <strong>Hours</strong> and <strong>Location</strong> — these match the search filters on the site.",
+                "Click <strong>Save job</strong>. It appears on the website instantly."
+              ]
+            },
+            {
+              accent: "msg", icon: "✉️", title: "Contact Messages", ordered: false,
+              what: "Every message sent through the website's contact form arrives here.",
+              why: "It's your inbox for visitors — never miss a question or a new lead.",
+              list: [
+                "See the sender's <strong>name, email, phone</strong> and full <strong>message</strong>.",
+                "Click an email address to reply directly.",
+                "If a CV was attached, use <strong>Download</strong> to open it.",
+                "Use <strong>Delete</strong> to remove a message you've already handled."
+              ]
+            },
+            {
+              accent: "cv", icon: "📄", title: "CVs / Applications", ordered: false,
+              what: "A focused view of only the submissions that include a CV.",
+              why: "Review job applications quickly, without other messages getting in the way.",
+              list: [
+                "Scan every applicant and <strong>Download CV</strong> with one click.",
+                "Perfect for working through applications all in one place."
+              ]
+            },
+            {
+              accent: "info", icon: "🔒", title: "Good to know", ordered: false,
+              what: "A few simple habits that keep your data safe and tidy.",
+              why: "Small steps that prevent mistakes and protect people's privacy.",
+              list: [
+                "All inputs are checked on the server — empty, too-long or unsafe values are rejected.",
+                "Lists don't refresh on their own; use <strong>Refresh</strong> to load the latest.",
+                "Always click <strong>Log out</strong> when you finish, especially on a shared device.",
+                "Stuck? The bright <strong>Need help?</strong> button (bottom-left) brings you back here."
+              ]
+            }
+          ],
+          tipIcon: "✨",
+          tip: "<strong>Tip:</strong> Start in the <strong>Jobs</strong> section to publish your first vacancy. The fields you fill in there match the website's search filters, so candidates find the role straight away."
+        }
+      },
+      nl: {
+        // login
+        login_title: "Beheerpaneel",
+        login_subtitle: "Log in om door te gaan",
+        login_username: "Gebruikersnaam",
+        login_password: "Wachtwoord",
+        login_btn: "Inloggen",
+        login_invalid: "Ongeldige gebruikersnaam of wachtwoord.",
+        login_throttled: "Te veel pogingen. Probeer het later opnieuw.",
+        login_network: "Netwerkfout. Probeer het opnieuw.",
+        // chrome
+        brand: "Beheerpaneel",
+        brand_sub: "Randstad",
+        brand_mini: "Beheerpaneel",
+        menu_open: "Menu openen",
+        nav_guide: "Uitleg",
+        nav_jobs: "Vacatures",
+        nav_messages: "Contactberichten",
+        nav_cvs: "Cv's / Sollicitaties",
+        logout: "Uitloggen",
+        signed_in_as: "Ingelogd als {user}",
+        lang_label: "Taal",
+        help_btn: "Hulp nodig?",
+        loading: "Laden…",
+        // jobs page
+        jobs_heading: "Vacatures",
+        jobs_lead: "Publiceer en beheer de vacatures op de website. Klik op “Vacature aanmaken” om er een toe te voegen.",
+        btn_create_job: "Vacature aanmaken",
+        btn_refresh: "Vernieuwen",
+        btn_cancel: "Annuleren",
+        // job form
+        job_form_create_title: "Vacature aanmaken",
+        job_form_edit_title: "Vacature bewerken",
+        f_title_nl: "Titel (NL)",
+        f_title_en: "Titel (EN)",
+        f_desc_nl: "Omschrijving (NL)",
+        f_desc_en: "Omschrijving (EN)",
+        ph_title_nl: "bijv. Senior Elektricien",
+        ph_title_en: "bijv. Senior Electrician",
+        ph_desc_nl: "Beschrijf de functie in het Nederlands",
+        ph_desc_en: "Beschrijf de functie in het Engels",
+        f_salary_type: "Salaristype",
+        salary_type_range: "Bereik (min – max)",
+        salary_type_fixed: "Vast bedrag",
+        hint_salary_type: "Kies Bereik voor een salarisrange, of Vast bedrag voor één bedrag.",
+        f_salary_min: "Salaris min (€)",
+        f_salary_max: "Salaris max (€)",
+        f_salary_amount: "Salarisbedrag (€)",
+        f_salary_bracket: "Salarisschaal",
+        hint_salary_bracket: "Wordt gebruikt door het salarisfilter op de website.",
+        f_experience: "Ervaring (jaren)",
+        f_level: "Niveau",
+        level_junior: "Junior",
+        level_middle: "Medior",
+        level_senior: "Senior",
+        f_hours: "Uren per week",
+        hours_32: "32 uur",
+        hours_36: "36 uur",
+        hours_38: "38 uur",
+        hours_40: "40 uur",
+        f_location: "Locatie",
+        ph_location: "Amsterdam",
+        f_company: "Bedrijf",
+        btn_save_job: "Vacature opslaan",
+        btn_update_job: "Vacature bijwerken",
+        note_job_created: "Vacature aangemaakt.",
+        note_job_updated: "Vacature bijgewerkt.",
+        note_job_save_err: "Kon de vacature niet opslaan. Controleer de velden.",
+        note_network: "Netwerkfout. Probeer het opnieuw.",
+        // jobs table
+        th_title_en: "Titel (EN)",
+        th_level: "Niveau",
+        th_location: "Locatie",
+        th_hours: "Uren",
+        th_salary_bracket: "Salarisschaal",
+        jobs_empty: "Nog geen vacatures. Maak je eerste vacature aan.",
+        btn_edit: "Bewerken",
+        btn_delete: "Verwijderen",
+        confirm_delete_job: "Deze vacature verwijderen? Dit kan niet ongedaan worden gemaakt.",
+        err_delete_job: "Kon de vacature niet verwijderen.",
+        err_load_jobs: "Kon de vacatures niet laden.",
+        // messages
+        messages_heading: "Contactberichten",
+        messages_lead: "Berichten die via het contactformulier op de website zijn verstuurd. Beantwoord per e-mail, download een bijgevoegd cv of verwijder afgehandelde berichten.",
+        th_name: "Naam",
+        th_email: "E-mail",
+        th_phone: "Telefoon",
+        th_message: "Bericht",
+        th_submitted: "Ingediend",
+        th_cv: "Cv",
+        messages_empty: "Nog geen contactberichten.",
+        btn_download: "Downloaden",
+        confirm_delete_sub: "Deze inzending verwijderen? Dit kan niet ongedaan worden gemaakt.",
+        err_delete_sub: "Kon de inzending niet verwijderen.",
+        err_load_messages: "Kon de contactberichten niet laden.",
+        err_download_cv: "Kon het cv niet downloaden.",
+        // cvs
+        cvs_heading: "Cv's / Sollicitaties",
+        cvs_lead: "Alleen de inzendingen met een cv, zodat je sollicitanten snel kunt bekijken.",
+        th_applicant: "Sollicitant",
+        cvs_empty: "Nog geen cv's ontvangen.",
+        btn_download_cv: "Cv downloaden",
+        err_load_cvs: "Kon de sollicitaties niet laden.",
+        // guide (visual cards)
+        guide: {
+          heading: "Welkom bij je Beheerpaneel",
+          lead: "In dit paneel beheer je alles wat de website laat werken. Gebruik het menu links om tussen secties te wisselen. Hieronder een korte, vriendelijke uitleg van wat elk onderdeel doet en waarom het belangrijk is.",
+          whatLabel: "Wat het doet:",
+          whyLabel: "Waarom het belangrijk is:",
+          cards: [
+            {
+              accent: "jobs", icon: "💼", title: "Vacatures", ordered: true,
+              what: "Maak en beheer de vacatures die op de website verschijnen.",
+              why: "Dit is wat kandidaten zien en zoeken — goede details zorgen dat de juiste mensen de functie vinden.",
+              list: [
+                "Open <strong>Vacatures</strong> en klik op <strong>Vacature aanmaken</strong>.",
+                "Vul de <strong>Titel</strong> en <strong>Omschrijving</strong> in zowel <strong>Nederlands</strong> als <strong>Engels</strong> in — bezoekers zien de tekst in hun eigen taal.",
+                "Kies een <strong>Salaristype</strong>: een <strong>Bereik</strong> (min–max) of één <strong>Vast bedrag</strong>.",
+                "Kies de <strong>Salarisschaal</strong>, het <strong>Niveau</strong>, de <strong>Uren</strong> en de <strong>Locatie</strong> — deze komen overeen met de zoekfilters op de site.",
+                "Klik op <strong>Vacature opslaan</strong>. De vacature staat direct op de website."
+              ]
+            },
+            {
+              accent: "msg", icon: "✉️", title: "Contactberichten", ordered: false,
+              what: "Elk bericht via het contactformulier van de website komt hier binnen.",
+              why: "Dit is je inbox voor bezoekers — mis nooit een vraag of een nieuwe lead.",
+              list: [
+                "Zie de <strong>naam, e-mail, telefoon</strong> en het volledige <strong>bericht</strong> van de afzender.",
+                "Klik op een e-mailadres om direct te antwoorden.",
+                "Is er een cv bijgevoegd? Gebruik <strong>Downloaden</strong> om het te openen.",
+                "Gebruik <strong>Verwijderen</strong> om een al afgehandeld bericht te wissen."
+              ]
+            },
+            {
+              accent: "cv", icon: "📄", title: "Cv's / Sollicitaties", ordered: false,
+              what: "Een overzicht van alleen de inzendingen met een cv.",
+              why: "Bekijk sollicitaties snel, zonder andere berichten ertussen.",
+              list: [
+                "Bekijk elke sollicitant en <strong>Cv downloaden</strong> met één klik.",
+                "Ideaal om sollicitaties op één plek door te nemen."
+              ]
+            },
+            {
+              accent: "info", icon: "🔒", title: "Goed om te weten", ordered: false,
+              what: "Een paar simpele gewoontes die je gegevens veilig en netjes houden.",
+              why: "Kleine stappen die fouten voorkomen en de privacy van mensen beschermen.",
+              list: [
+                "Alle invoer wordt op de server gecontroleerd — lege, te lange of onveilige waarden worden geweigerd.",
+                "Lijsten verversen niet vanzelf; gebruik <strong>Vernieuwen</strong> om het laatste te laden.",
+                "Klik altijd op <strong>Uitloggen</strong> als je klaar bent, zeker op een gedeeld apparaat.",
+                "Vastgelopen? De felle knop <strong>Hulp nodig?</strong> (linksonder) brengt je hier terug."
+              ]
+            }
+          ],
+          tipIcon: "✨",
+          tip: "<strong>Tip:</strong> Begin in de sectie <strong>Vacatures</strong> om je eerste vacature te plaatsen. De velden die je daar invult komen overeen met de zoekfilters van de website, zodat kandidaten de functie meteen vinden."
+        }
+      }
+    };
+
+    let LANG = localStorage.getItem("admin_lang") || "en";
+    if (!I18N[LANG]) LANG = "en";
+    let meUsername = "";
+
+    // Translate a single key in the current language.
+    function t(key) {
+      const v = I18N[LANG][key];
+      return v == null ? "" : v;
+    }
+
+    // Re-translate every static chrome element + dynamic content (guide/tables).
+    function applyLang(lang) {
+      if (!I18N[lang]) lang = "en";
+      LANG = lang;
+      localStorage.setItem("admin_lang", lang);
+      document.documentElement.lang = lang;
+
+      // Static text nodes.
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        const k = el.getAttribute("data-i18n");
+        if (I18N[lang][k] != null) el.textContent = I18N[lang][k];
+      });
+      // Attribute translations: placeholder / title / aria-label.
+      ["placeholder", "title", "aria-label"].forEach((attr) => {
+        document.querySelectorAll(`[data-i18n-${attr}]`).forEach((el) => {
+          const k = el.getAttribute(`data-i18n-${attr}`);
+          if (I18N[lang][k] != null) el.setAttribute(attr, I18N[lang][k]);
+        });
+      });
+
+      // Active language button highlight.
+      document.querySelectorAll(".lang-btn").forEach((b) => {
+        b.classList.toggle("active", b.dataset.lang === lang);
+      });
+
+      // Signed-in label (server username routed safely via textContent).
+      $("me-label").textContent = meUsername
+        ? t("signed_in_as").replace("{user}", meUsername)
+        : "";
+
+      // Dynamic content.
+      refreshJobFormLabels();
+      renderGuide();
+      if (jobsCache) renderJobs(jobsCache);
+      if (submissionsCache) {
+        renderMessages(submissionsCache);
+        renderCvs(submissionsCache.filter(hasCv));
+      }
+    }
+
+    // Build the friendly, colorful Guide in the active language.
+    // All strings here are author-controlled static literals (no server data).
+    function renderGuide() {
+      const g = I18N[LANG].guide;
+      let html =
+        `<div class="page-head"><h2>${g.heading}</h2></div>` +
+        `<p class="lead">${g.lead}</p>` +
+        `<div class="guide-grid">`;
+      for (const c of g.cards) {
+        const tag = c.ordered ? "ol" : "ul";
+        const items = c.list.map((li) => `<li>${li}</li>`).join("");
+        html +=
+          `<div class="guide-card accent-${c.accent}">` +
+            `<div class="guide-icon" aria-hidden="true">${c.icon}</div>` +
+            `<h3>${c.title}</h3>` +
+            `<p class="g-line"><span class="g-label">${g.whatLabel}</span> ${c.what}</p>` +
+            `<p class="g-line"><span class="g-label">${g.whyLabel}</span> ${c.why}</p>` +
+            `<${tag}>${items}</${tag}>` +
+          `</div>`;
+      }
+      html +=
+        `<div class="guide-card full">` +
+          `<div class="callout"><span class="callout-ico" aria-hidden="true">${g.tipIcon}</span><div>${g.tip}</div></div>` +
+        `</div></div>`;
+      $("guide-content").innerHTML = html;
+    }
+
+    // Keep the create/edit job form labels in sync with the active language + mode.
+    function refreshJobFormLabels() {
+      const editing = !!$("job-id").value;
+      $("job-form-title").textContent = editing ? t("job_form_edit_title") : t("job_form_create_title");
+      $("job-submit").textContent = editing ? t("btn_update_job") : t("btn_save_job");
+    }
+
+    // Caches so a language change re-renders without re-fetching.
+    let jobsCache = null;
+    let submissionsCache = null;
+
+    document.querySelectorAll(".lang-btn").forEach((b) => {
+      b.addEventListener("click", () => applyLang(b.dataset.lang));
+    });
+
     // ---------- view switching ----------
     const loginView = $("login-view");
     const appView = $("app-view");
@@ -545,6 +1197,14 @@
       showLogin();
     }
 
+    // ---------- mobile sidebar drawer ----------
+    const sidebar = $("sidebar");
+    const backdrop = $("backdrop");
+    function openMenu() { sidebar.classList.add("open"); backdrop.classList.add("show"); }
+    function closeMenu() { sidebar.classList.remove("open"); backdrop.classList.remove("show"); }
+    $("menu-toggle").addEventListener("click", openMenu);
+    backdrop.addEventListener("click", closeMenu);
+
     // ---------- login ----------
     loginForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -561,9 +1221,9 @@
         if (!res.ok) {
           const data = await res.json().catch(() => ({}));
           if (res.status === 429) {
-            loginError.textContent = data.detail || "Too many attempts. Please try again later.";
+            loginError.textContent = data.detail || t("login_throttled");
           } else {
-            loginError.textContent = data.detail || "Invalid username or password.";
+            loginError.textContent = data.detail || t("login_invalid");
           }
           return;
         }
@@ -572,7 +1232,7 @@
         loginForm.reset();
         await enterApp();
       } catch (err) {
-        loginError.textContent = "Network error. Please try again.";
+        loginError.textContent = t("login_network");
       } finally {
         loginBtn.disabled = false;
       }
@@ -580,11 +1240,12 @@
 
     $("logout-btn").addEventListener("click", () => {
       clearToken();
+      closeMenu();
       showLogin();
     });
 
     // ---------- tab navigation ----------
-    const TABS = ["jobs", "messages", "cvs"];
+    const TABS = ["guide", "jobs", "messages", "cvs"];
     function activateTab(tab) {
       TABS.forEach((t) => {
         $(`tab-${t}`).classList.toggle("hidden", t !== tab);
@@ -592,12 +1253,22 @@
       document.querySelectorAll(".nav-item").forEach((b) => {
         b.classList.toggle("active", b.dataset.tab === tab);
       });
+      // Hide the floating help button while on the Guide itself.
+      $("help-fab").classList.toggle("hidden", tab === "guide");
+      closeMenu(); // collapse the drawer after choosing on mobile
       if (tab === "jobs") loadJobs();
       else if (tab === "messages") loadMessages();
       else if (tab === "cvs") loadCvs();
     }
     document.querySelectorAll(".nav-item").forEach((b) => {
       b.addEventListener("click", () => activateTab(b.dataset.tab));
+    });
+
+    // Floating help button: jump to the Guide, scroll up, close mobile drawer.
+    $("help-fab").addEventListener("click", () => {
+      activateTab("guide");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      closeMenu();
     });
 
     // ---------- app bootstrap ----------
@@ -608,14 +1279,17 @@
         if (meRes.status === 401) return handleUnauthorized();
         if (meRes.ok) {
           const me = await meRes.json();
-          $("me-label").textContent = me.username ? `Signed in as ${me.username}` : "";
+          meUsername = me.username ? String(me.username) : "";
+          $("me-label").textContent = meUsername
+            ? t("signed_in_as").replace("{user}", meUsername)
+            : "";
         }
       } catch (_) { /* non-fatal */ }
-      activateTab("jobs");
+      activateTab("guide");
     }
 
     // =====================================================
-    // TAB 1 — JOBS
+    // TAB: JOBS
     // =====================================================
     const jobForm = $("job-form");
     const jobFormPanel = $("job-form-panel");
@@ -641,8 +1315,7 @@
       jobForm.reset();
       $("job-id").value = "";
       $("company").value = "Randstad";
-      $("job-form-title").textContent = "Create job";
-      $("job-submit").textContent = "Save job";
+      refreshJobFormLabels();
       jobFormNote.textContent = "";
       jobFormNote.className = "form-note";
       document.querySelector('input[name="salaryType"][value="range"]').checked = true;
@@ -710,17 +1383,17 @@
           jobFormNote.className = "form-note err";
           jobFormNote.textContent = (typeof data.detail === "string" && data.detail)
             ? data.detail
-            : "Could not save the job. Please check the fields.";
+            : t("note_job_save_err");
           return;
         }
         jobFormNote.className = "form-note ok";
-        jobFormNote.textContent = id ? "Job updated." : "Job created.";
+        jobFormNote.textContent = id ? t("note_job_updated") : t("note_job_created");
         resetJobForm();
         closeJobForm();
         await loadJobs();
       } catch (err) {
         jobFormNote.className = "form-note err";
-        jobFormNote.textContent = "Network error. Please try again.";
+        jobFormNote.textContent = t("note_network");
       } finally {
         submitBtn.disabled = false;
       }
@@ -728,7 +1401,7 @@
 
     async function loadJobs() {
       const loading = $("jobs-loading"), table = $("jobs-table"), empty = $("jobs-empty");
-      loading.textContent = "Loading…";
+      loading.textContent = t("loading");
       loading.classList.remove("hidden");
       table.classList.add("hidden");
       empty.classList.add("hidden");
@@ -737,9 +1410,10 @@
         if (res.status === 401) return handleUnauthorized();
         if (!res.ok) throw new Error("load failed");
         const rows = await res.json();
-        renderJobs(Array.isArray(rows) ? rows : []);
+        jobsCache = Array.isArray(rows) ? rows : [];
+        renderJobs(jobsCache);
       } catch (err) {
-        loading.textContent = "Could not load jobs.";
+        loading.textContent = t("err_load_jobs");
         return;
       } finally {
         loading.classList.add("hidden");
@@ -765,8 +1439,8 @@
           <td class="nowrap">${esc(j.salaryRange ?? "—")}</td>
           <td class="nowrap">
             <div class="row-actions">
-              <button class="btn-ghost btn-sm js-edit">Edit</button>
-              <button class="btn-danger btn-sm js-del">Delete</button>
+              <button class="btn-ghost btn-sm js-edit">${t("btn_edit")}</button>
+              <button class="btn-danger btn-sm js-del">${t("btn_delete")}</button>
             </div>
           </td>`;
         tr.querySelector(".js-edit").addEventListener("click", () => editJob(j));
@@ -796,40 +1470,40 @@
       if (j.hoursPerWeek) $("hoursPerWeek").value = String(j.hoursPerWeek);
       $("location").value = j.location ?? "";
       $("company").value = j.company ?? "Randstad";
-      $("job-form-title").textContent = "Edit job";
-      $("job-submit").textContent = "Update job";
+      refreshJobFormLabels();
       openJobForm();
       jobFormPanel.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
     async function deleteJob(id) {
-      if (!confirm("Delete this job? This cannot be undone.")) return;
+      if (!confirm(t("confirm_delete_job"))) return;
       try {
         const res = await fetch(API.job(id), { method: "DELETE", headers: authHeaders() });
         if (res.status === 401) return handleUnauthorized();
         if (res.status !== 204 && !res.ok) throw new Error("delete failed");
         await loadJobs();
       } catch (err) {
-        alert("Could not delete the job.");
+        alert(t("err_delete_job"));
       }
     }
 
     // =====================================================
-    // TAB 2 — CONTACT MESSAGES  (+ shared submissions cache)
+    // TAB: CONTACT MESSAGES  (+ shared submissions fetch)
     // =====================================================
     async function fetchSubmissions() {
       const res = await fetch(API.submissions, { headers: authHeaders() });
       if (res.status === 401) { handleUnauthorized(); return null; }
       if (!res.ok) throw new Error("load failed");
       const rows = await res.json();
-      return Array.isArray(rows) ? rows : [];
+      submissionsCache = Array.isArray(rows) ? rows : [];
+      return submissionsCache;
     }
 
     $("messages-refresh").addEventListener("click", loadMessages);
 
     async function loadMessages() {
       const loading = $("messages-loading"), table = $("messages-table"), empty = $("messages-empty");
-      loading.textContent = "Loading…";
+      loading.textContent = t("loading");
       loading.classList.remove("hidden");
       table.classList.add("hidden");
       empty.classList.add("hidden");
@@ -838,7 +1512,7 @@
         if (rows === null) return;
         renderMessages(rows);
       } catch (err) {
-        loading.textContent = "Could not load contact messages.";
+        loading.textContent = t("err_load_messages");
         return;
       } finally {
         loading.classList.add("hidden");
@@ -858,8 +1532,8 @@
         const tr = document.createElement("tr");
         const msg = r.message ?? "";
         const cvCell = hasCv(r)
-          ? `<button class="btn-ghost btn-sm js-cv">Download</button>`
-          : `<span style="color:var(--text-dim)">—</span>`;
+          ? `<button class="btn-ghost btn-sm js-cv">${t("btn_download")}</button>`
+          : `<span style="color:var(--muted)">—</span>`;
         tr.innerHTML = `
           <td class="nowrap">${esc(fullName(r))}</td>
           <td><a href="mailto:${esc(r.email)}">${esc(r.email)}</a></td>
@@ -867,7 +1541,7 @@
           <td><div class="msg-preview" title="${esc(msg)}">${esc(msg)}</div></td>
           <td class="nowrap">${esc(fmtDate(r.created_at ?? r.createdAt))}</td>
           <td class="nowrap">${cvCell}</td>
-          <td class="nowrap"><button class="btn-danger btn-sm js-del">Delete</button></td>`;
+          <td class="nowrap"><button class="btn-danger btn-sm js-del">${t("btn_delete")}</button></td>`;
         const cvBtn = tr.querySelector(".js-cv");
         if (cvBtn) cvBtn.addEventListener("click", () => downloadCv(r));
         tr.querySelector(".js-del").addEventListener("click", () => deleteSubmission(r.id, loadMessages));
@@ -878,14 +1552,14 @@
     }
 
     async function deleteSubmission(id, after) {
-      if (!confirm("Delete this submission? This cannot be undone.")) return;
+      if (!confirm(t("confirm_delete_sub"))) return;
       try {
         const res = await fetch(API.submission(id), { method: "DELETE", headers: authHeaders() });
         if (res.status === 401) return handleUnauthorized();
         if (res.status !== 204 && !res.ok) throw new Error("delete failed");
         await after();
       } catch (err) {
-        alert("Could not delete the submission.");
+        alert(t("err_delete_sub"));
       }
     }
 
@@ -905,18 +1579,18 @@
         a.remove();
         URL.revokeObjectURL(url);
       } catch (err) {
-        alert("Could not download the CV.");
+        alert(t("err_download_cv"));
       }
     }
 
     // =====================================================
-    // TAB 3 — CVS / APPLICATIONS
+    // TAB: CVS / APPLICATIONS
     // =====================================================
     $("cvs-refresh").addEventListener("click", loadCvs);
 
     async function loadCvs() {
       const loading = $("cvs-loading"), table = $("cvs-table"), empty = $("cvs-empty");
-      loading.textContent = "Loading…";
+      loading.textContent = t("loading");
       loading.classList.remove("hidden");
       table.classList.add("hidden");
       empty.classList.add("hidden");
@@ -925,7 +1599,7 @@
         if (all === null) return;
         renderCvs(all.filter(hasCv));
       } catch (err) {
-        loading.textContent = "Could not load applications.";
+        loading.textContent = t("err_load_cvs");
         return;
       } finally {
         loading.classList.add("hidden");
@@ -948,7 +1622,7 @@
           <td><a href="mailto:${esc(r.email)}">${esc(r.email)}</a></td>
           <td class="nowrap">${esc(r.phone ?? "—")}</td>
           <td class="nowrap">${esc(fmtDate(r.created_at ?? r.createdAt))}</td>
-          <td class="nowrap"><button class="btn-primary btn-sm js-cv">Download CV</button></td>`;
+          <td class="nowrap"><button class="btn-primary btn-sm js-cv">${t("btn_download_cv")}</button></td>`;
         tr.querySelector(".js-cv").addEventListener("click", () => downloadCv(r));
         tbody.appendChild(tr);
       }
@@ -960,6 +1634,7 @@
     // INIT
     // =====================================================
     (async function init() {
+      applyLang(LANG); // translate chrome + render the Guide before anything shows
       if (getToken()) {
         await enterApp();
       } else {
