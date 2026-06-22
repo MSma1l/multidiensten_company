@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useLanguage } from '../../context/LanguageContext.jsx'
 import {
   validateName,
@@ -10,6 +10,21 @@ import {
 import styles from './Contact.module.css'
 
 const EMPTY = { firstName: '', lastName: '', email: '', phone: '', message: '' }
+
+// Optional CV upload constraints (mirrored on the backend, which is the source
+// of truth). Extensions are matched case-insensitively; size cap is 5 MB.
+const ALLOWED_CV_EXTENSIONS = ['pdf', 'doc', 'docx']
+const MAX_CV_SIZE = 5 * 1024 * 1024
+
+// Validates the optional CV file: returns an error KEY (matching
+// translations.contact.errors) or '' when there is no file / it is valid.
+function validateCv(file) {
+  if (!file) return ''
+  const ext = file.name.split('.').pop().toLowerCase()
+  if (!ALLOWED_CV_EXTENSIONS.includes(ext)) return 'cvType'
+  if (file.size > MAX_CV_SIZE) return 'cvSize'
+  return ''
+}
 
 // Backend base URL. Falls back to the local dev server when not provided.
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
@@ -44,6 +59,9 @@ export default function Contact() {
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [serverError, setServerError] = useState('')
+  const [cv, setCv] = useState(null)
+  const [cvError, setCvError] = useState('')
+  const cvInputRef = useRef(null)
 
   // Resolves a field's error key into a localized message (or '' if valid).
   const messageFor = (field) => {
@@ -66,11 +84,20 @@ export default function Contact() {
     setErrors((prev) => ({ ...prev, [name]: FIELD_VALIDATOR[name](value) }))
   }
 
+  const handleCvChange = (e) => {
+    const file = e.target.files?.[0] ?? null
+    setCv(file)
+    setCvError(validateCv(file))
+  }
+
   // Marks the submission as successful and clears the form.
   const succeed = () => {
     setSubmitted(true)
     setValues(EMPTY)
     setTouched({})
+    setCv(null)
+    setCvError('')
+    if (cvInputRef.current) cvInputRef.current.value = ''
   }
 
   const handleSubmit = async (e) => {
@@ -80,8 +107,13 @@ export default function Contact() {
     setErrors(validation)
     setTouched({ firstName: true, lastName: true, email: true, phone: true, message: true })
 
-    // Client-side validation must pass before we attempt anything.
+    // Client-side validation of the text fields must pass first.
     if (Object.keys(validation).length !== 0) return
+
+    // Then the optional CV file (extension + size) is validated client-side.
+    const cvErr = validateCv(cv)
+    setCvError(cvErr)
+    if (cvErr) return
 
     // No backend configured (unit tests / local dev without an API): keep the
     // original optimistic behaviour so the success UI shows immediately.
@@ -92,16 +124,39 @@ export default function Contact() {
 
     setSubmitting(true)
     try {
+      // Multipart body: 5 text fields + the optional CV. We deliberately do not
+      // set Content-Type so the browser adds the multipart boundary itself.
+      const formData = new FormData()
+      formData.append('firstName', values.firstName)
+      formData.append('lastName', values.lastName)
+      formData.append('email', values.email)
+      formData.append('phone', values.phone)
+      formData.append('message', values.message)
+      if (cv) formData.append('cv', cv)
+
       const res = await fetch(`${API_URL}/api/contact`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values),
+        body: formData,
       })
-      if (!res.ok) throw new Error(`Request failed with status ${res.status}`)
+
+      // The backend is the source of truth for validation. On a non-2xx
+      // response we surface its `detail` message and keep the form intact so
+      // the UI reflects that nothing was saved.
+      if (!res.ok) {
+        let detail = ''
+        try {
+          const data = await res.json()
+          if (typeof data?.detail === 'string') detail = data.detail
+        } catch {
+          detail = ''
+        }
+        setServerError(detail || c.serverError)
+        return
+      }
+
       succeed()
     } catch {
-      // Network failure or non-2xx response: show a generic error. We avoid
-      // surfacing backend validation details (FastAPI's `detail`) to the user.
+      // Network failure: show a generic error, leave the form untouched.
       setServerError(c.serverError)
     } finally {
       setSubmitting(false)
@@ -207,6 +262,21 @@ export default function Contact() {
             {messageFor('message') && (
               <span className={styles.errorText}>{messageFor('message')}</span>
             )}
+          </div>
+
+          <div className={styles.group}>
+            <label htmlFor="cv">{c.cv}</label>
+            <input
+              id="cv"
+              name="cv"
+              type="file"
+              ref={cvInputRef}
+              accept=".pdf,.doc,.docx"
+              className={`${styles.input}${cvError ? ` ${styles.inputError}` : ''}`}
+              onChange={handleCvChange}
+              aria-invalid={Boolean(cvError)}
+            />
+            {cvError && <span className={styles.errorText}>{c.errors[cvError]}</span>}
           </div>
 
           <button type="submit" className={styles.submit} disabled={submitting}>

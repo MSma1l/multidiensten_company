@@ -1,12 +1,18 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useLanguage } from '../../context/LanguageContext.jsx'
-import { jobs, cities, levels, experienceRanges, hoursOptions } from '../../data/jobs.js'
+import { cities, levels, experienceRanges, hoursOptions } from '../../data/jobs.js'
 import { filterJobs, sortJobs } from './jobFilters.js'
 import JobCard from './JobCard.jsx'
 import styles from './Jobs.module.css'
 
+// Backend base URL. Falls back to the local dev server when not provided.
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+
 export default function Jobs() {
   const { t } = useLanguage()
+  const [allJobs, setAllJobs] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState(false)
   const [search, setSearch] = useState('')
   const [location, setLocation] = useState('')
   const [level, setLevel] = useState('')
@@ -15,11 +21,39 @@ export default function Jobs() {
   const [sort, setSort] = useState('recommended')
   const [filtersOpen, setFiltersOpen] = useState(false)
 
-  // Client-side filtering of the static job list (UI only, no backend).
-  // The actual logic lives in the pure ./jobFilters module (unit-tested there).
+  // Fetch the full job list from the backend on mount. Admins enter jobs
+  // manually, so there is no static fallback list any more.
+  useEffect(() => {
+    let active = true
+    setLoading(true)
+    setLoadError(false)
+    fetch(`${API_URL}/api/jobs`)
+      .then((res) => {
+        if (!res.ok) throw new Error(`Request failed with status ${res.status}`)
+        return res.json()
+      })
+      .then((data) => {
+        if (!active) return
+        setAllJobs(Array.isArray(data) ? data : [])
+      })
+      .catch(() => {
+        if (!active) return
+        setLoadError(true)
+        setAllJobs([])
+      })
+      .finally(() => {
+        if (active) setLoading(false)
+      })
+    return () => {
+      active = false
+    }
+  }, [])
+
+  // Client-side filtering of the fetched job list. The actual logic lives in
+  // the pure ./jobFilters module (unit-tested there).
   const filtered = useMemo(
-    () => sortJobs(filterJobs(jobs, { search, location, level, experience, hours }), sort),
-    [search, location, level, experience, hours, sort],
+    () => sortJobs(filterJobs(allJobs, { search, location, level, experience, hours }), sort),
+    [allJobs, search, location, level, experience, hours, sort],
   )
 
   return (
@@ -153,18 +187,28 @@ export default function Jobs() {
         )}
       </div>
 
-      <p className={styles.resultsCount}>
-        {filtered.length} {t.jobs.resultsLabel}
-      </p>
-
-      {filtered.length > 0 ? (
-        <div className={styles.grid}>
-          {filtered.map((job) => (
-            <JobCard key={job.id} job={job} />
-          ))}
-        </div>
+      {loading ? (
+        <p className={styles.noResults}>{t.jobs.loading}</p>
+      ) : loadError ? (
+        <p className={styles.noResults}>{t.jobs.loadError}</p>
       ) : (
-        <p className={styles.noResults}>{t.jobs.noResults}</p>
+        <>
+          <p className={styles.resultsCount}>
+            {filtered.length} {t.jobs.resultsLabel}
+          </p>
+
+          {filtered.length > 0 ? (
+            <div className={styles.grid}>
+              {filtered.map((job) => (
+                <JobCard key={job.id} job={job} />
+              ))}
+            </div>
+          ) : (
+            <p className={styles.noResults}>
+              {allJobs.length === 0 ? t.jobs.empty : t.jobs.noResults}
+            </p>
+          )}
+        </>
       )}
     </div>
   )

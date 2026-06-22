@@ -90,6 +90,9 @@ export const translations = {
       apply: 'Solliciteren',
       resultsLabel: 'vacatures gevonden',
       noResults: 'Geen vacatures gevonden met deze filters.',
+      loading: 'Vacatures laden…',
+      empty: 'Er zijn momenteel geen vacatures beschikbaar.',
+      loadError: 'Vacatures konden niet worden geladen. Probeer het later opnieuw.',
     },
 
     contact: {
@@ -104,6 +107,7 @@ export const translations = {
       phone: 'Telefoonnummer',
       message: 'Bericht',
       messagePlaceholder: 'Vertel ons over uzelf...',
+      cv: 'CV (optioneel)',
       submit: 'Verzoek Versturen',
       submitting: 'Versturen...',
       success: 'Perfect! Wij nemen binnenkort contact met u op met geweldige kansen.',
@@ -119,6 +123,8 @@ export const translations = {
         phoneInvalid: 'Voer een geldig telefoonnummer in.',
         messageRequired: 'Schrijf een bericht.',
         messageInvalid: 'Het bericht moet minstens 10 tekens bevatten.',
+        cvType: 'Alleen PDF-, DOC- of DOCX-bestanden zijn toegestaan.',
+        cvSize: 'Het bestand mag niet groter zijn dan 5 MB.',
       },
     },
 
@@ -223,6 +229,9 @@ export const translations = {
       apply: 'Apply Now',
       resultsLabel: 'jobs found',
       noResults: 'No openings match these filters.',
+      loading: 'Loading jobs…',
+      empty: 'There are currently no openings available.',
+      loadError: 'Could not load jobs. Please try again later.',
     },
 
     contact: {
@@ -236,6 +245,7 @@ export const translations = {
       phone: 'Phone Number',
       message: 'Message',
       messagePlaceholder: 'Tell us about yourself...',
+      cv: 'CV (optional)',
       submit: 'Send Request',
       submitting: 'Sending...',
       success: 'Perfect! We will contact you very soon with exciting opportunities.',
@@ -251,6 +261,8 @@ export const translations = {
         phoneInvalid: 'Please enter a valid phone number.',
         messageRequired: 'Please write a message.',
         messageInvalid: 'Your message must be at least 10 characters.',
+        cvType: 'Only PDF, DOC or DOCX files are allowed.',
+        cvSize: 'The file must not be larger than 5 MB.',
       },
     },
 

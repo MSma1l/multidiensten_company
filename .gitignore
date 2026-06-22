@@ -6,3 +6,11 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 .env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+backend/uploads/
+.venv/
+venv/
