@@ -11,6 +11,12 @@ import styles from './Contact.module.css'
 
 const EMPTY = { firstName: '', lastName: '', email: '', phone: '', message: '' }
 
+// Backend base URL. Falls back to the local dev server when not provided.
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+// Whether a backend is explicitly configured. When it is not (e.g. unit tests
+// or local dev without a backend), we keep the original optimistic behaviour.
+const API_CONFIGURED = Boolean(import.meta.env.VITE_API_URL)
+
 // Maps a field name + error key ('Required' | 'Invalid') to a translation key.
 const ERROR_KEY = {
   firstName: { Required: 'firstNameRequired', Invalid: 'firstNameInvalid' },
@@ -36,6 +42,8 @@ export default function Contact() {
   const [errors, setErrors] = useState({})
   const [touched, setTouched] = useState({})
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [serverError, setServerError] = useState('')
 
   // Resolves a field's error key into a localized message (or '' if valid).
   const messageFor = (field) => {
@@ -58,17 +66,45 @@ export default function Contact() {
     setErrors((prev) => ({ ...prev, [name]: FIELD_VALIDATOR[name](value) }))
   }
 
-  const handleSubmit = (e) => {
+  // Marks the submission as successful and clears the form.
+  const succeed = () => {
+    setSubmitted(true)
+    setValues(EMPTY)
+    setTouched({})
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    setServerError('')
     const validation = validateContactForm(values)
     setErrors(validation)
     setTouched({ firstName: true, lastName: true, email: true, phone: true, message: true })
 
-    if (Object.keys(validation).length === 0) {
-      // UI only: no network request. Show success and reset the form.
-      setSubmitted(true)
-      setValues(EMPTY)
-      setTouched({})
+    // Client-side validation must pass before we attempt anything.
+    if (Object.keys(validation).length !== 0) return
+
+    // No backend configured (unit tests / local dev without an API): keep the
+    // original optimistic behaviour so the success UI shows immediately.
+    if (!API_CONFIGURED) {
+      succeed()
+      return
+    }
+
+    setSubmitting(true)
+    try {
+      const res = await fetch(`${API_URL}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values),
+      })
+      if (!res.ok) throw new Error(`Request failed with status ${res.status}`)
+      succeed()
+    } catch {
+      // Network failure or non-2xx response: show a generic error. We avoid
+      // surfacing backend validation details (FastAPI's `detail`) to the user.
+      setServerError(c.serverError)
+    } finally {
+      setSubmitting(false)
     }
   }
 
@@ -173,9 +209,15 @@ export default function Contact() {
             )}
           </div>
 
-          <button type="submit" className={styles.submit}>
-            {c.submit}
+          <button type="submit" className={styles.submit} disabled={submitting}>
+            {submitting ? c.submitting : c.submit}
           </button>
+
+          {serverError && (
+            <div className={styles.serverError} role="alert">
+              {serverError}
+            </div>
+          )}
 
           {submitted && <div className={styles.success}>{c.success}</div>}
         </form>

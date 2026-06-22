@@ -108,6 +108,24 @@
   box-shadow: 0 12px 32px rgba(30, 58, 138, 0.3);
 }
 
+.submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.serverError {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  text-align: center;
+  font-weight: 600;
+  background: #fdecea;
+  color: #c0392b;
+  border: 1px solid #f5c6cb;
+}
+
 .success {
   margin-top: 20px;
   padding: 16px;

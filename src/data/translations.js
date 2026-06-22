@@ -105,7 +105,9 @@ export const translations = {
       message: 'Bericht',
       messagePlaceholder: 'Vertel ons over uzelf...',
       submit: 'Verzoek Versturen',
+      submitting: 'Versturen...',
       success: 'Perfect! Wij nemen binnenkort contact met u op met geweldige kansen.',
+      serverError: 'Er ging iets mis bij het versturen. Probeer het later opnieuw.',
       errors: {
         firstNameRequired: 'Voer uw voornaam in.',
         firstNameInvalid: 'De voornaam mag alleen letters bevatten (min. 2 tekens).',
@@ -235,7 +237,9 @@ export const translations = {
       message: 'Message',
       messagePlaceholder: 'Tell us about yourself...',
       submit: 'Send Request',
+      submitting: 'Sending...',
       success: 'Perfect! We will contact you very soon with exciting opportunities.',
+      serverError: 'Something went wrong while sending your request. Please try again later.',
       errors: {
         firstNameRequired: 'Please enter your first name.',
         firstNameInvalid: 'First name must contain only letters (min. 2 characters).',
