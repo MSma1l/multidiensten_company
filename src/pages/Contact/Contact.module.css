@@ -122,6 +122,12 @@
   .contactPage {
     padding: 40px 20px;
   }
+  .title {
+    font-size: 30px;
+  }
+  .subtitle {
+    margin-bottom: 30px;
+  }
   .form {
     padding: 30px 20px;
   }

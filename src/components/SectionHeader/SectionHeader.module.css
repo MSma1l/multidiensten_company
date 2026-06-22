@@ -15,3 +15,15 @@
   color: var(--color-muted);
   font-weight: 400;
 }
+
+@media (max-width: 768px) {
+  .sectionHeader {
+    margin-bottom: 40px;
+  }
+  .title {
+    font-size: 30px;
+  }
+  .subtitle {
+    font-size: 16px;
+  }
+}

@@ -4,7 +4,7 @@
 // NOTE: the `nl` entries reproduce the original design copy verbatim.
 export const translations = {
   nl: {
-    nav: { home: 'Home', jobs: 'Vacatures', contact: 'Contact' },
+    nav: { home: 'Home', jobs: 'Vacatures', contact: 'Kom in contact' },
 
     hero: {
       title: 'Begin uw Carrièretransformatie',
@@ -66,6 +66,7 @@ export const translations = {
 
     jobs: {
       title: 'Vacatures die bij U Passen',
+      filters: 'Filters',
       search: 'Zoeken',
       searchPlaceholder: 'Functietitel...',
       location: 'Locatie',
@@ -196,6 +197,7 @@ export const translations = {
 
     jobs: {
       title: 'Opportunities That Match You',
+      filters: 'Filters',
       search: 'Search',
       searchPlaceholder: 'Job title...',
       location: 'Location',
@@ -222,15 +224,15 @@ export const translations = {
     },
 
     contact: {
-      title: "Let's Chat",
-      subtitle: "Share your details and we'll reach out to explore your ideal opportunities",
+      title: "Start a Conversation",
+      subtitle: "Send your details and we will contact you shortly to discuss your ideal opportunities.",
       firstName: 'First Name',
       firstNamePlaceholder: 'Your first name',
       lastName: 'Last Name',
       lastNamePlaceholder: 'Your last name',
       email: 'Email Address',
       phone: 'Phone Number',
-      message: 'Your Message',
+      message: 'Message',
       messagePlaceholder: 'Tell us about yourself...',
       submit: 'Send Request',
       success: 'Perfect! We will contact you very soon with exciting opportunities.',
@@ -251,7 +253,7 @@ export const translations = {
     footer: {
       aboutTitle: 'About Us',
       aboutText:
-        'Randstad is a global recruitment leader with 60+ years of experience connecting talent with transformative opportunities.',
+        'Randstad is a global recruitment leader with 7+ years of experience connecting talent with transformative opportunities.',
       contactTitle: 'Contact Us',
       socialTitle: 'Social Media',
       linksTitle: 'Links',

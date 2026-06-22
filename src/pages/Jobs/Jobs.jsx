@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useLanguage } from '../../context/LanguageContext.jsx'
-import { jobs, cities, salaryRanges, levels, experienceRanges, hoursOptions } from '../../data/jobs.js'
+import { jobs, cities, levels, experienceRanges, hoursOptions } from '../../data/jobs.js'
 import { filterJobs, sortJobs } from './jobFilters.js'
 import JobCard from './JobCard.jsx'
 import styles from './Jobs.module.css'
@@ -9,17 +9,17 @@ export default function Jobs() {
   const { t } = useLanguage()
   const [search, setSearch] = useState('')
   const [location, setLocation] = useState('')
-  const [salary, setSalary] = useState('')
   const [level, setLevel] = useState('')
   const [experience, setExperience] = useState('')
   const [hours, setHours] = useState('')
   const [sort, setSort] = useState('recommended')
+  const [filtersOpen, setFiltersOpen] = useState(false)
 
   // Client-side filtering of the static job list (UI only, no backend).
   // The actual logic lives in the pure ./jobFilters module (unit-tested there).
   const filtered = useMemo(
-    () => sortJobs(filterJobs(jobs, { search, location, salary, level, experience, hours }), sort),
-    [search, location, salary, level, experience, hours, sort],
+    () => sortJobs(filterJobs(jobs, { search, location, level, experience, hours }), sort),
+    [search, location, level, experience, hours, sort],
   )
 
   return (
@@ -29,6 +29,20 @@ export default function Jobs() {
       </div>
 
       <div className={styles.filters}>
+        <button
+          type="button"
+          className={styles.filtersToggle}
+          aria-expanded={filtersOpen}
+          onClick={() => setFiltersOpen((open) => !open)}
+        >
+          <span className={styles.filtersToggleLabel}>
+            <i className="fas fa-sliders"></i>
+            {t.jobs.filters}
+          </span>
+          <i className={`fas fa-chevron-${filtersOpen ? 'up' : 'down'}`}></i>
+        </button>
+
+        {filtersOpen && (
         <div className={styles.filtersGrid}>
           <div className={styles.filterGroup}>
             <label className={styles.filterLabel} htmlFor="job-search">
@@ -58,25 +72,6 @@ export default function Jobs() {
               {cities.map((city) => (
                 <option key={city} value={city}>
                   {city}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className={styles.filterGroup}>
-            <label className={styles.filterLabel} htmlFor="job-salary">
-              {t.jobs.salary}
-            </label>
-            <select
-              id="job-salary"
-              className={styles.select}
-              value={salary}
-              onChange={(e) => setSalary(e.target.value)}
-            >
-              <option value="">{t.jobs.allSalaries}</option>
-              {salaryRanges.map((range) => (
-                <option key={range.value} value={range.value}>
-                  {range.label}
                 </option>
               ))}
             </select>
@@ -155,6 +150,7 @@ export default function Jobs() {
             </select>
           </div>
         </div>
+        )}
       </div>
 
       <p className={styles.resultsCount}>

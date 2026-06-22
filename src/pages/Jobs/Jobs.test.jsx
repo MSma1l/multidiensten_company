@@ -12,6 +12,11 @@ function setup() {
   }
 }
 
+// Filters live in a collapsed dropdown; open it before touching the inputs.
+async function openFilters(user) {
+  await user.click(screen.getByRole('button', { name: /filters/i }))
+}
+
 describe('Jobs page', () => {
   it('renders every job by default', () => {
     setup()
@@ -20,6 +25,7 @@ describe('Jobs page', () => {
 
   it('filters by search term', async () => {
     const { user } = setup()
+    await openFilters(user)
 
     await user.type(screen.getByLabelText('Search'), 'nurse')
 
@@ -30,6 +36,7 @@ describe('Jobs page', () => {
 
   it('filters by location', async () => {
     const { user } = setup()
+    await openFilters(user)
 
     await user.selectOptions(screen.getByLabelText('Location'), 'Eindhoven')
 
@@ -39,6 +46,7 @@ describe('Jobs page', () => {
 
   it('combines filters and shows a message when nothing matches', async () => {
     const { user } = setup()
+    await openFilters(user)
 
     // "nurse" is in Rotterdam, so filtering to Amsterdam yields no results.
     await user.type(screen.getByLabelText('Search'), 'nurse')

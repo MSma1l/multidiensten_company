@@ -8,35 +8,33 @@ export default function JobCard({ job }) {
 
   return (
     <div className={styles.card}>
-      <div className={styles.header}>
-        <h3 className={styles.title}>{isEN ? job.titleEN : job.title}</h3>
-        <p className={styles.company}>{job.company}</p>
+      <div className={styles.top}>
+        <div className={styles.titleBlock}>
+          <h3 className={styles.title}>{isEN ? job.titleEN : job.title}</h3>
+          <p className={styles.company}>{job.company}</p>
+        </div>
+        <div className={styles.salary}>{job.salary}</div>
       </div>
 
-      <div className={styles.meta}>
-        <div className={styles.metaItem}>
+      <div className={styles.tags}>
+        <span className={styles.tag}>
           <i className="fas fa-map-marker-alt"></i>
-          <span>{job.location}</span>
-        </div>
-        <div className={styles.metaItem}>
+          {job.location}
+        </span>
+        <span className={styles.tag}>
           <i className="fas fa-clock"></i>
-          <span>
-            {job.hoursPerWeek} {t.jobs.hoursUnit}
-          </span>
-        </div>
-        <div className={styles.metaItem}>
+          {job.hoursPerWeek} {t.jobs.hoursUnit}
+        </span>
+        <span className={styles.tag}>
           <i className="fas fa-user-tie"></i>
-          <span>{t.jobs.levels[job.level]}</span>
-        </div>
-        <div className={styles.metaItem}>
+          {t.jobs.levels[job.level]}
+        </span>
+        <span className={styles.tag}>
           <i className="fas fa-briefcase"></i>
-          <span>
-            {job.experienceYears}+ {t.jobs.yearsUnit}
-          </span>
-        </div>
+          {job.experienceYears}+ {t.jobs.yearsUnit}
+        </span>
       </div>
 
-      <div className={styles.salary}>{job.salary}</div>
       <p className={styles.desc}>{isEN ? job.descEN : job.desc}</p>
 
       <Button to="/contact" variant="gradient" className={styles.button}>

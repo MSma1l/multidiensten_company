@@ -70,3 +70,11 @@ button {
 .page {
   animation: fadeIn 0.5s ease-in;
 }
+
+/* On phones the 80% cap wastes horizontal space, so let content fill the
+   padded width of each section instead. */
+@media (max-width: 768px) {
+  :root {
+    --max-width: 100%;
+  }
+}

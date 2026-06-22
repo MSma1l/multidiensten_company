@@ -60,7 +60,7 @@ describe('Contact form', () => {
     await user.type(screen.getByLabelText('Email Address'), 'jan@randstad.nl')
     await user.type(screen.getByLabelText('Phone Number'), '+31 6 12345678')
     await user.type(
-      screen.getByLabelText('Your Message'),
+      screen.getByLabelText('Message'),
       'I would like to apply for this opportunity.',
     )
 

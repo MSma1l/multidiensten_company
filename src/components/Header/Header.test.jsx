@@ -8,7 +8,7 @@ describe('Header', () => {
   it('renders Dutch navigation by default', () => {
     renderWithProviders(<Header />, { language: 'nl' })
     expect(screen.getByRole('link', { name: 'Vacatures' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Contact' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Kom in contact' })).toBeInTheDocument()
   })
 
   it('switches navigation labels to English when EN is clicked', async () => {

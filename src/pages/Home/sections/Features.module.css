@@ -59,7 +59,4 @@
   .features {
     padding: 40px 20px;
   }
-  .grid {
-    grid-template-columns: 1fr;
-  }
 }

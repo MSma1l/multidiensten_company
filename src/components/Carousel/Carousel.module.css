@@ -1,0 +1,100 @@
+.carousel {
+  width: 100%;
+}
+
+.viewport {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.track {
+  flex: 1;
+  display: flex;
+  gap: 28px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  /* Room so card hover-lift and shadows aren't clipped. */
+  padding: 10px 4px;
+  scrollbar-width: none;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.slide {
+  /* `--per` cards per row on desktop, accounting for the 28px gaps. */
+  flex: 0 0 calc((100% - (var(--per) - 1) * 28px) / var(--per));
+  scroll-snap-align: start;
+}
+
+/* Stretch the card to fill the slide so a row of cards is equal height. */
+.slide > * {
+  height: 100%;
+}
+
+.arrow {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: white;
+  color: var(--color-primary);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.arrow:hover:not(:disabled) {
+  background: var(--color-primary);
+  color: white;
+  transform: scale(1.08);
+}
+
+.arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: #cbd5e1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dotActive {
+  background: var(--color-primary);
+  transform: scale(1.25);
+}
+
+@media (max-width: 768px) {
+  /* On phones rely on swipe + dots; show one card with a peek of the next. */
+  .arrow {
+    display: none;
+  }
+  .track {
+    gap: 16px;
+  }
+  .slide {
+    flex-basis: 85%;
+  }
+}

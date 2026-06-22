@@ -45,7 +45,7 @@ export default function About() {
         </div>
 
         <div className={styles.image}>
-          <i className="fas fa-image"></i>
+          <img src="/about.jpg" alt={a.title} />
         </div>
       </div>
     </section>

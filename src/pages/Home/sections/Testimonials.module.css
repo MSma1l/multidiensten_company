@@ -90,5 +90,30 @@
   }
   .grid {
     grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .card {
+    padding: 22px;
+  }
+  .text {
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .author {
+    padding-top: 14px;
+    gap: 10px;
+  }
+  .avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+  .name {
+    font-size: 13px;
+  }
+  .job {
+    font-size: 12px;
   }
 }

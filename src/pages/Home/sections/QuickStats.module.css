@@ -68,17 +68,27 @@
 
 @media (max-width: 768px) {
   .quickStats {
-    margin: -40px auto 0;
-    padding: 40px 20px;
+    margin: -40px 20px 0;
+    padding: 28px 16px;
   }
   .container {
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 16px;
   }
-}
-
-@media (max-width: 480px) {
-  .container {
-    grid-template-columns: 1fr;
+  .stat {
+    padding: 12px;
+  }
+  .icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+  .number {
+    font-size: 28px;
+  }
+  .label {
+    font-size: 12px;
+  }
+  .text {
+    font-size: 11px;
   }
 }
