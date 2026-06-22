@@ -35,7 +35,6 @@ _EMAIL_RE = re.compile(
 
 # Phone: only +, -, (), spaces and digits are permitted characters.
 _PHONE_ALLOWED_RE = re.compile(r"^[+\-()\s\d]+$")
-_DIGIT_RE = re.compile(r"\d")
 
 
 # ---------------------------------------------------------------------------- #
@@ -123,7 +122,7 @@ class ContactCreate(BaseModel):
             raise ValueError(
                 "Phone may only contain digits and the characters + - ( ) and spaces."
             )
-        digit_count = len(_DIGIT_RE.findall(v))
+        digit_count = len(_HAS_DIGIT_RE.findall(v))
         if digit_count < 7 or digit_count > 15:
             raise ValueError("Phone must contain between 7 and 15 digits.")
         return v

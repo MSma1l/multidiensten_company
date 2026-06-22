@@ -163,7 +163,8 @@ def get_current_admin(
 
     try:
         payload = decode_access_token(credentials.credentials)
-    except JWTError as exc:  # noqa: F841 - intentionally not leaking details
+    except JWTError as exc:
+        # Re-raise a generic 401; the underlying reason is intentionally not leaked.
         raise _CREDENTIALS_EXCEPTION from exc
 
     username = payload.get("sub")

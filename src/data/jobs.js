@@ -8,18 +8,11 @@
 
 export const cities = ['Amsterdam', 'Rotterdam', 'Utrecht', 'Eindhoven']
 
-export const salaryRanges = [
-  { value: '0-2000', label: '€0 - €2.000' },
-  { value: '2000-3000', label: '€2.000 - €3.000' },
-  { value: '3000-4000', label: '€3.000 - €4.000' },
-  { value: '4000+', label: '€4.000+' },
-]
-
 // Experience levels, in seniority order. Labels are translated in the UI.
 export const levels = ['junior', 'middle', 'senior']
 
-// Years-of-experience brackets. `value` is parsed the same way as salaryRanges
-// ("0-2", "3-5", "6+"); `label` is the numeric part shown next to the unit.
+// Years-of-experience brackets. `value` is a range string ("0-2", "3-5", "6+");
+// `label` is the numeric part shown next to the unit.
 export const experienceRanges = [
   { value: '0-2', label: '0-2' },
   { value: '3-5', label: '3-5' },
