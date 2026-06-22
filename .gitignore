@@ -14,3 +14,7 @@ __pycache__/
 backend/uploads/
 .venv/
 venv/
+
+# Local documentation (contains the secret admin URL — keep off git/server)
+README.md
+DEPLOYMENT.md
