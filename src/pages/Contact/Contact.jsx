@@ -26,11 +26,15 @@ function validateCv(file) {
   return ''
 }
 
-// Backend base URL. Falls back to the local dev server when not provided.
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
-// Whether a backend is explicitly configured. When it is not (e.g. unit tests
-// or local dev without a backend), we keep the original optimistic behaviour.
-const API_CONFIGURED = Boolean(import.meta.env.VITE_API_URL)
+// Backend base URL.
+// - Production build: same-origin relative calls ("") so the reverse proxy
+//   serves the SPA and the API on one domain (works over http and https).
+// - Dev: the standalone backend on :8000 (overridable via VITE_API_URL).
+// - Tests (no backend): keep the original optimistic behaviour.
+const API_URL =
+  import.meta.env.VITE_API_URL ?? (import.meta.env.PROD ? '' : 'http://localhost:8000')
+const API_CONFIGURED =
+  import.meta.env.VITE_API_URL !== undefined || import.meta.env.PROD
 
 // Maps a field name + error key ('Required' | 'Invalid') to a translation key.
 const ERROR_KEY = {

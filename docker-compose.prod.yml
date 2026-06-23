@@ -45,6 +45,14 @@ services:
     expose:
       - "8000"
     restart: unless-stopped
+    # The image runs as a non-root user and ships no curl; use Python (always
+    # present) to probe the public health endpoint.
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/api/health').status==200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   frontend:
     build:
@@ -60,13 +68,24 @@ services:
     depends_on:
       - backend
     restart: unless-stopped
+    # nginx:alpine ships busybox wget; --spider just checks the SPA responds.
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:80/"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   proxy:
     image: nginx:alpine
     restart: unless-stopped
     depends_on:
-      - backend
-      - frontend
+      # Wait until both upstreams report healthy before starting the proxy so
+      # the first requests after a deploy don't hit a cold backend/frontend.
+      backend:
+        condition: service_healthy
+      frontend:
+        condition: service_healthy
     environment:
       # Consumed by envsubst to render the config template at startup.
       SERVER_NAME: ${SERVER_NAME}

@@ -5,8 +5,10 @@ import { filterJobs, sortJobs } from './jobFilters.js'
 import JobCard from './JobCard.jsx'
 import styles from './Jobs.module.css'
 
-// Backend base URL. Falls back to the local dev server when not provided.
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+// Backend base URL. Production build uses same-origin relative calls (reverse
+// proxy); dev uses the standalone backend on :8000 (overridable via env).
+const API_URL =
+  import.meta.env.VITE_API_URL ?? (import.meta.env.PROD ? '' : 'http://localhost:8000')
 
 export default function Jobs() {
   const { t } = useLanguage()
