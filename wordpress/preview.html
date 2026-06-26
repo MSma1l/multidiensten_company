@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Randstad-Diensten — Preview (visual only)</title>
+	<!-- The REAL theme stylesheet, used 1:1 -->
+	<link rel="stylesheet" href="multidiensten/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<style>
+		/* Preview-only: single-file page switching (in real WordPress these are
+		   separate pages, so the theme CSS doesn't need this). */
+		.page { display: none; }
+		.page.active { display: block; }
+		.preview-banner {
+			background: #fff7d6; color: #7a5c00; text-align: center;
+			padding: 8px 16px; font-size: 13px; font-weight: 600;
+			border-bottom: 1px solid #f0e2a8;
+		}
+	</style>
+	<script>
+		// Provide the data island the real js/jobs.js expects.
+		window.MD_JOBS = {
+			i18n: {
+				nl: { resultsLabel: 'vacatures gevonden', noResults: 'Geen vacatures gevonden met deze filters.', empty: 'Er zijn momenteel geen vacatures beschikbaar.', searchPlaceholder: 'Functietitel...' },
+				en: { resultsLabel: 'jobs found', noResults: 'No openings match these filters.', empty: 'There are currently no openings available.', searchPlaceholder: 'Job title...' }
+			}
+		};
+	</script>
+</head>
+<body class="lang-nl">
+
+	<div class="preview-banner">
+		PREVIEW VIZUAL — doar designul. Panoul de admin, salvarea formularelor și gestionarea joburilor funcționează doar în WordPress real (LocalWP / Mijndomein).
+	</div>
+
+	<!-- ========== HEADER ========== -->
+	<header class="site-header">
+		<div class="header-container">
+			<a class="logo" href="#" onclick="showPage('home');return false;">Randstad-Diensten</a>
+			<div style="display: flex; align-items: center; gap: 16px;">
+				<nav class="nav-buttons" id="md-nav">
+					<a class="nav-btn active" href="#" onclick="showPage('home',this);return false;"><span class="hidden-nl">Home</span><span class="hidden-en">Home</span></a>
+					<a class="nav-btn" href="#" onclick="showPage('jobs',this);return false;"><span class="hidden-nl">Vacatures</span><span class="hidden-en">Opportunities</span></a>
+					<a class="nav-btn" href="#" onclick="showPage('contact',this);return false;"><span class="hidden-nl">Kom in contact</span><span class="hidden-en">Get in touch</span></a>
+				</nav>
+				<div class="lang-switcher">
+					<button class="lang-btn active" data-lang="nl">NL</button>
+					<button class="lang-btn" data-lang="en">EN</button>
+				</div>
+				<button class="nav-toggle" id="md-nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="md-nav">
+					<span></span><span></span><span></span>
+				</button>
+			</div>
+		</div>
+	</header>
+
+	<!-- ========== HOME ========== -->
+	<div id="home" class="page active">
+		<section class="hero">
+			<div class="hero-content">
+				<h1 class="hidden-nl">Begin uw Carrièretransformatie</h1>
+				<h1 class="hidden-en">Begin Your Career Transformation</h1>
+				<p class="hidden-nl">Tienduizenden professionals vertrouwen op ons om hun beste werkkansen te vinden. Bent u klaar om te groeien?</p>
+				<p class="hidden-en">Tens of thousands of professionals trust us to discover their ideal career paths. Are you ready to advance?</p>
+				<div class="hero-buttons">
+					<a class="btn btn-primary" href="#" onclick="showPage('jobs');return false;"><span class="hidden-nl">Vacatures Bekijken</span><span class="hidden-en">Browse Opportunities</span></a>
+					<a class="btn btn-secondary" href="#" onclick="showPage('contact');return false;"><span class="hidden-nl">Schrijf u nu in</span><span class="hidden-en">Apply Today</span></a>
+				</div>
+			</div>
+		</section>
+
+		<section class="quick-stats">
+			<div class="quick-stats-container">
+				<div class="quick-stat">
+					<div class="quick-stat-icon"><i class="fas fa-users"></i></div>
+					<div class="quick-stat-number">185K+</div>
+					<div class="quick-stat-label hidden-nl">Aangenomen Professionals</div><div class="quick-stat-label hidden-en">Professionals Hired</div>
+					<div class="quick-stat-text hidden-nl">Alleen dit jaar al</div><div class="quick-stat-text hidden-en">This year alone</div>
+				</div>
+				<div class="quick-stat">
+					<div class="quick-stat-icon"><i class="fas fa-briefcase"></i></div>
+					<div class="quick-stat-number">5000+</div>
+					<div class="quick-stat-label hidden-nl">Openstaande Vacatures</div><div class="quick-stat-label hidden-en">Open Positions</div>
+					<div class="quick-stat-text hidden-nl">Nu beschikbaar</div><div class="quick-stat-text hidden-en">Ready now</div>
+				</div>
+				<div class="quick-stat">
+					<div class="quick-stat-icon"><i class="fas fa-star"></i></div>
+					<div class="quick-stat-number">4.9/5</div>
+					<div class="quick-stat-label hidden-nl">Klantbeoordelingen</div><div class="quick-stat-label hidden-en">Client Ratings</div>
+					<div class="quick-stat-text hidden-nl">Van 10.000+ gebruikers</div><div class="quick-stat-text hidden-en">From 10K+ users</div>
+				</div>
+				<div class="quick-stat">
+					<div class="quick-stat-icon"><i class="fas fa-handshake"></i></div>
+					<div class="quick-stat-number">100%</div>
+					<div class="quick-stat-label hidden-nl">Volledige Toewijding</div><div class="quick-stat-label hidden-en">Full Commitment</div>
+					<div class="quick-stat-text hidden-nl">Voor uw succes</div><div class="quick-stat-text hidden-en">To your success</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="features-section">
+			<div class="features-container">
+				<div class="section-header">
+					<h2 class="section-title hidden-nl">Waarom Voor Ons Kiezen</h2><h2 class="section-title hidden-en">Why Choose Us</h2>
+					<p class="section-subtitle hidden-nl">Wij bieden veel meer dan banen: wij bieden carrièretransformatie</p>
+					<p class="section-subtitle hidden-en">We offer more than jobs: we offer career transformation</p>
+				</div>
+				<div class="md-carousel" data-autoplay="2000">
+					<div class="md-carousel-viewport">
+						<button class="md-carousel-arrow md-carousel-prev" type="button" aria-label="Vorige"><i class="fas fa-chevron-left"></i></button>
+						<div class="md-carousel-track" style="--per:3">
+							<div class="md-carousel-slide"><div class="feature-card"><div class="feature-icon"><i class="fas fa-magic"></i></div><h3 class="feature-title hidden-nl">Perfecte Match</h3><h3 class="feature-title hidden-en">Perfect Match</h3><p class="feature-desc hidden-nl">Geavanceerde algoritmes koppelen uw vaardigheden aan ideale vacatures</p><p class="feature-desc hidden-en">Advanced algorithms match your skills with ideal opportunities</p></div></div>
+							<div class="md-carousel-slide"><div class="feature-card"><div class="feature-icon"><i class="fas fa-chart-line"></i></div><h3 class="feature-title hidden-nl">Carrièregroei</h3><h3 class="feature-title hidden-en">Career Growth</h3><p class="feature-desc hidden-nl">Gratis trainingen en exclusieve mentorprogramma&rsquo;s</p><p class="feature-desc hidden-en">Free training and exclusive mentoring programs</p></div></div>
+							<div class="md-carousel-slide"><div class="feature-card"><div class="feature-icon"><i class="fas fa-coins"></i></div><h3 class="feature-title hidden-nl">Concurrerend Salaris</h3><h3 class="feature-title hidden-en">Competitive Pay</h3><p class="feature-desc hidden-nl">Wij garanderen de beste salarisonderhandelingen op de markt</p><p class="feature-desc hidden-en">We guarantee the best salary negotiations in the market</p></div></div>
+							<div class="md-carousel-slide"><div class="feature-card"><div class="feature-icon"><i class="fas fa-shield-alt"></i></div><h3 class="feature-title hidden-nl">Vertrouwen en Veiligheid</h3><h3 class="feature-title hidden-en">Trust &amp; Safety</h3><p class="feature-desc hidden-nl">60+ jaar ervaring en miljoenen professionals die op ons vertrouwen</p><p class="feature-desc hidden-en">60+ years of experience with millions trusting us</p></div></div>
+							<div class="md-carousel-slide"><div class="feature-card"><div class="feature-icon"><i class="fas fa-hourglass-half"></i></div><h3 class="feature-title hidden-nl">Volledige Flexibiliteit</h3><h3 class="feature-title hidden-en">Total Flexibility</h3><p class="feature-desc hidden-nl">Kies tussen fulltime, parttime of tijdelijk werk</p><p class="feature-desc hidden-en">Choose between full-time, part-time or temporary work</p></div></div>
+							<div class="md-carousel-slide"><div class="feature-card"><div class="feature-icon"><i class="fas fa-handshake"></i></div><h3 class="feature-title hidden-nl">Persoonlijke Ondersteuning</h3><h3 class="feature-title hidden-en">Personal Support</h3><p class="feature-desc hidden-nl">Uw toegewijde recruiter staat altijd voor u klaar</p><p class="feature-desc hidden-en">Your dedicated recruiter is always ready to help</p></div></div>
+						</div>
+						<button class="md-carousel-arrow md-carousel-next" type="button" aria-label="Volgende"><i class="fas fa-chevron-right"></i></button>
+					</div>
+					<div class="md-carousel-dots"></div>
+				</div>
+			</div>
+		</section>
+
+		<section class="about-section">
+			<div class="about-container">
+				<div class="about-content">
+					<h2 class="hidden-nl">Uw Perfecte Carrière Wacht op U</h2><h2 class="hidden-en">Your Ideal Career Awaits</h2>
+					<p class="hidden-nl">Wij zijn gespecialiseerd in het verbinden van talent met kansen in de sectoren <strong>logistiek, productie, technologie, opslag en handel</strong>. Onze diepgaande ervaring in deze markten stelt ons in staat de perfecte matches te maken.</p>
+					<p class="hidden-en">We excel at connecting talent with opportunities in <strong>logistics, manufacturing, technology, warehousing and commerce</strong>. Our deep industry expertise enables perfect career matches.</p>
+					<p class="hidden-nl"><strong>Vanuit onze vestigingen in Gelderland, Limburg en Noord-Brabant,</strong> werken wij met persoonlijke aandacht en hechte relaties. Uw carrièretransformatie is onze missie.</p>
+					<p class="hidden-en"><strong>Operating from offices in Gelderland, Limburg and North Brabant,</strong> we build lasting professional relationships. Your career transformation is our mission.</p>
+					<div class="about-buttons">
+						<a class="btn-about btn-about-primary" href="#" onclick="showPage('jobs');return false;"><span class="hidden-nl">Vind Uw Baan <i class="fas fa-arrow-right"></i></span><span class="hidden-en">Find Your Role <i class="fas fa-arrow-right"></i></span></a>
+						<a class="btn-about btn-about-secondary" href="#" onclick="showPage('contact');return false;"><span class="hidden-nl">Praat Met Ons <i class="fas fa-arrow-right"></i></span><span class="hidden-en">Talk With Us <i class="fas fa-arrow-right"></i></span></a>
+					</div>
+				</div>
+				<div class="about-image"><img src="multidiensten/assets/about.jpg" alt=""></div>
+			</div>
+		</section>
+
+		<section class="testimonials-section">
+			<div class="testimonials-container">
+				<div class="section-header">
+					<h2 class="section-title hidden-nl">Succesverhalen</h2><h2 class="section-title hidden-en">Success Stories</h2>
+					<p class="section-subtitle hidden-nl">Professionals die hun leven veranderden dankzij onze vacatures</p><p class="section-subtitle hidden-en">Professionals who transformed their lives through our opportunities</p>
+				</div>
+				<div class="md-carousel" data-autoplay="2000">
+					<div class="md-carousel-viewport">
+						<button class="md-carousel-arrow md-carousel-prev" type="button" aria-label="Vorige"><i class="fas fa-chevron-left"></i></button>
+						<div class="md-carousel-track" style="--per:3">
+							<div class="md-carousel-slide"><div class="testimonial-card"><div class="rating"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><p class="testimonial-text hidden-nl">"Randstad-Diensten heeft mijn carrière getransformeerd. Het proces was eenvoudig, snel en professioneel. Binnen enkele dagen had ik mijn perfecte nieuwe baan!"</p><p class="testimonial-text hidden-en">"Randstad-Diensten transformed my career. The process was smooth, fast and professional. Within days, I was in my perfect new role!"</p><div class="testimonial-author"><div class="author-avatar">MP</div><div class="author-info"><h4>Miguel Pereira</h4><div class="author-job hidden-nl">Technisch Specialist</div><div class="author-job hidden-en">Technical Specialist</div></div></div></div></div>
+							<div class="md-carousel-slide"><div class="testimonial-card"><div class="rating"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><p class="testimonial-text hidden-nl">"Het team van Randstad-Diensten was geweldig! Ze vonden niet alleen de juiste baan, maar bereidden me ook voor op succes."</p><p class="testimonial-text hidden-en">"The Randstad-Diensten team was amazing! Not only did they find the right job, they prepared me for success."</p><div class="testimonial-author"><div class="author-avatar">CF</div><div class="author-info"><h4>Carla Fernandes</h4><div class="author-job hidden-nl">Projectmanager</div><div class="author-job hidden-en">Project Manager</div></div></div></div></div>
+							<div class="md-carousel-slide"><div class="testimonial-card"><div class="rating"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><p class="testimonial-text hidden-nl">"Mijn salaris verdrievoudigen? Ja! Randstad-Diensten heeft een geweldig pakket voor mij onderhandeld. Bedankt voor de toewijding!"</p><p class="testimonial-text hidden-en">"Triple my salary? Yes! Randstad-Diensten negotiated an incredible package for me. Thank you for the dedication!"</p><div class="testimonial-author"><div class="author-avatar">JL</div><div class="author-info"><h4>João Lucas</h4><div class="author-job hidden-nl">Financieel Analist</div><div class="author-job hidden-en">Financial Analyst</div></div></div></div></div>
+						</div>
+						<button class="md-carousel-arrow md-carousel-next" type="button" aria-label="Volgende"><i class="fas fa-chevron-right"></i></button>
+					</div>
+					<div class="md-carousel-dots"></div>
+				</div>
+			</div>
+		</section>
+
+		<section class="block-section">
+			<div class="block-container">
+				<h2 class="block-title hidden-nl">Uw Volgende Grote Kans</h2><h2 class="block-title hidden-en">Your Next Big Opportunity</h2>
+				<p class="block-subtitle hidden-nl">Honderdduizenden hebben hun carrière al via ons getransformeerd. Nu is het uw beurt om nieuwe professionele hoogten te bereiken!</p>
+				<p class="block-subtitle hidden-en">Hundreds of thousands have already transformed their careers with us. Now it's your turn to reach new professional heights!</p>
+				<div class="block-buttons">
+					<a class="btn-block btn-block-primary" href="#" onclick="showPage('jobs');return false;"><span class="hidden-nl">Ontdek Vacatures</span><span class="hidden-en">Discover Openings</span></a>
+					<a class="btn-block btn-block-secondary" href="#" onclick="showPage('contact');return false;"><span class="hidden-nl">Deel Uw CV</span><span class="hidden-en">Submit Your Profile</span></a>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<!-- ========== JOBS ========== -->
+	<div id="jobs" class="page">
+		<div class="jobs-page">
+			<div class="jobs-header"><h1 class="jobs-title"><span class="hidden-nl">Vacatures die bij U Passen</span><span class="hidden-en">Opportunities That Match You</span></h1></div>
+			<div class="filters">
+				<button type="button" class="filters-toggle" aria-expanded="false" aria-controls="md-filters-grid">
+					<span class="filters-toggle-label"><i class="fas fa-sliders"></i><span class="hidden-nl">Filters</span><span class="hidden-en">Filters</span></span>
+					<i class="fas fa-chevron-down"></i>
+				</button>
+				<div class="filters-grid" id="md-filters-grid" hidden>
+					<div class="filter-group"><label class="filter-label" for="md-search"><span class="hidden-nl">Zoeken</span><span class="hidden-en">Search</span></label><input type="text" id="md-search" class="filter-input" data-ph-nl="Functietitel..." data-ph-en="Job title..." placeholder="Functietitel..."></div>
+					<div class="filter-group"><label class="filter-label" for="md-location"><span class="hidden-nl">Locatie</span><span class="hidden-en">Location</span></label><select id="md-location" class="filter-select"><option value="" data-nl="Alle Steden" data-en="All Cities">Alle Steden</option><option value="Amsterdam">Amsterdam</option><option value="Rotterdam">Rotterdam</option><option value="Utrecht">Utrecht</option><option value="Eindhoven">Eindhoven</option></select></div>
+					<div class="filter-group"><label class="filter-label" for="md-level"><span class="hidden-nl">Ervaringsniveau</span><span class="hidden-en">Experience level</span></label><select id="md-level" class="filter-select"><option value="" data-nl="Alle niveaus" data-en="All levels">Alle niveaus</option><option value="junior" data-nl="Junior" data-en="Junior">Junior</option><option value="middle" data-nl="Medior" data-en="Mid-level">Medior</option><option value="senior" data-nl="Senior" data-en="Senior">Senior</option></select></div>
+					<div class="filter-group"><label class="filter-label" for="md-experience"><span class="hidden-nl">Werkervaring</span><span class="hidden-en">Experience</span></label><select id="md-experience" class="filter-select"><option value="" data-nl="Alle ervaring" data-en="All experience">Alle ervaring</option><option value="0-2" data-nl="0-2 jaar" data-en="0-2 years">0-2 jaar</option><option value="3-5" data-nl="3-5 jaar" data-en="3-5 years">3-5 jaar</option><option value="6+" data-nl="6+ jaar" data-en="6+ years">6+ jaar</option></select></div>
+					<div class="filter-group"><label class="filter-label" for="md-hours"><span class="hidden-nl">Uren per week</span><span class="hidden-en">Hours per week</span></label><select id="md-hours" class="filter-select"><option value="" data-nl="Alle uren" data-en="All hours">Alle uren</option><option value="32" data-nl="32 uur" data-en="32 hrs">32 uur</option><option value="36" data-nl="36 uur" data-en="36 hrs">36 uur</option><option value="38" data-nl="38 uur" data-en="38 hrs">38 uur</option><option value="40" data-nl="40 uur" data-en="40 hrs">40 uur</option></select></div>
+					<div class="filter-group"><label class="filter-label" for="md-sort"><span class="hidden-nl">Sorteren op</span><span class="hidden-en">Sort by</span></label><select id="md-sort" class="filter-select"><option value="recommended" data-nl="Aanbevolen" data-en="Recommended">Aanbevolen</option><option value="salaryDesc" data-nl="Salaris: hoog naar laag" data-en="Salary: high to low">Salaris: hoog naar laag</option><option value="salaryAsc" data-nl="Salaris: laag naar hoog" data-en="Salary: low to high">Salaris: laag naar hoog</option></select></div>
+				</div>
+			</div>
+			<p class="results-count" id="md-results-count"></p>
+			<div class="jobs-grid" id="md-jobs-grid">
+				<div class="job-card" data-title="Senior Elektricien" data-titleen="Senior Electrician" data-desc="Gespecialiseerd technisch werk aan elektrische installaties." data-descen="Specialised technical work on electrical installations." data-company="Randstad-Diensten" data-location="Amsterdam" data-level="senior" data-experience="6" data-hours="40" data-salarymin="2500" data-salarymax="3200" data-salarybucket="2000-3000">
+					<div class="job-top"><div class="job-title-block"><h3 class="job-title"><span class="hidden-nl">Senior Elektricien</span><span class="hidden-en">Senior Electrician</span></h3><p class="job-company">Randstad-Diensten</p></div><div class="job-salary">€2.500 - €3.200</div></div>
+					<div class="job-tags"><span class="job-tag"><i class="fas fa-map-marker-alt"></i>Amsterdam</span><span class="job-tag"><i class="fas fa-clock"></i>40 <span class="hidden-nl">uur</span><span class="hidden-en">hrs</span></span><span class="job-tag"><i class="fas fa-user-tie"></i><span class="hidden-nl">Senior</span><span class="hidden-en">Senior</span></span><span class="job-tag"><i class="fas fa-briefcase"></i>6+ <span class="hidden-nl">jaar</span><span class="hidden-en">years</span></span></div>
+					<p class="job-desc"><span class="hidden-nl">Gespecialiseerd technisch werk aan elektrische installaties.</span><span class="hidden-en">Specialised technical work on electrical installations.</span></p>
+					<a class="job-button" href="#" onclick="showPage('contact');return false;"><span class="hidden-nl">Solliciteren</span><span class="hidden-en">Apply Now</span></a>
+				</div>
+				<div class="job-card" data-title="CNC Operator" data-titleen="CNC Operator" data-desc="Bediening van precisie CNC-machines." data-descen="Operating precision CNC machines." data-company="Randstad-Diensten" data-location="Eindhoven" data-level="middle" data-experience="3" data-hours="38" data-salarymin="2200" data-salarymax="2800" data-salarybucket="2000-3000">
+					<div class="job-top"><div class="job-title-block"><h3 class="job-title"><span class="hidden-nl">CNC Operator</span><span class="hidden-en">CNC Operator</span></h3><p class="job-company">Randstad-Diensten</p></div><div class="job-salary">€2.200 - €2.800</div></div>
+					<div class="job-tags"><span class="job-tag"><i class="fas fa-map-marker-alt"></i>Eindhoven</span><span class="job-tag"><i class="fas fa-clock"></i>38 <span class="hidden-nl">uur</span><span class="hidden-en">hrs</span></span><span class="job-tag"><i class="fas fa-user-tie"></i><span class="hidden-nl">Medior</span><span class="hidden-en">Mid-level</span></span><span class="job-tag"><i class="fas fa-briefcase"></i>3+ <span class="hidden-nl">jaar</span><span class="hidden-en">years</span></span></div>
+					<p class="job-desc"><span class="hidden-nl">Bediening van precisie CNC-machines.</span><span class="hidden-en">Operating precision CNC machines.</span></p>
+					<a class="job-button" href="#" onclick="showPage('contact');return false;"><span class="hidden-nl">Solliciteren</span><span class="hidden-en">Apply Now</span></a>
+				</div>
+				<div class="job-card" data-title="Magazijnmedewerker" data-titleen="Warehouse Associate" data-desc="Magazijnwerkzaamheden en voorraadbeheer." data-descen="Warehouse operations and inventory management." data-company="Randstad-Diensten" data-location="Rotterdam" data-level="junior" data-experience="0" data-hours="36" data-salarymin="1850" data-salarymax="2400" data-salarybucket="0-2000">
+					<div class="job-top"><div class="job-title-block"><h3 class="job-title"><span class="hidden-nl">Magazijnmedewerker</span><span class="hidden-en">Warehouse Associate</span></h3><p class="job-company">Randstad-Diensten</p></div><div class="job-salary">€1.850 - €2.400</div></div>
+					<div class="job-tags"><span class="job-tag"><i class="fas fa-map-marker-alt"></i>Rotterdam</span><span class="job-tag"><i class="fas fa-clock"></i>36 <span class="hidden-nl">uur</span><span class="hidden-en">hrs</span></span><span class="job-tag"><i class="fas fa-user-tie"></i><span class="hidden-nl">Junior</span><span class="hidden-en">Junior</span></span><span class="job-tag"><i class="fas fa-briefcase"></i>0+ <span class="hidden-nl">jaar</span><span class="hidden-en">years</span></span></div>
+					<p class="job-desc"><span class="hidden-nl">Magazijnwerkzaamheden en voorraadbeheer.</span><span class="hidden-en">Warehouse operations and inventory management.</span></p>
+					<a class="job-button" href="#" onclick="showPage('contact');return false;"><span class="hidden-nl">Solliciteren</span><span class="hidden-en">Apply Now</span></a>
+				</div>
+				<div class="job-card" data-title="Financieel Analist" data-titleen="Financial Analyst" data-desc="Financiële analyse en rapportage." data-descen="Financial analysis and reporting." data-company="Randstad-Diensten" data-location="Amsterdam" data-level="senior" data-experience="6" data-hours="40" data-salarymin="3000" data-salarymax="4000" data-salarybucket="3000-4000">
+					<div class="job-top"><div class="job-title-block"><h3 class="job-title"><span class="hidden-nl">Financieel Analist</span><span class="hidden-en">Financial Analyst</span></h3><p class="job-company">Randstad-Diensten</p></div><div class="job-salary">€3.000 - €4.000</div></div>
+					<div class="job-tags"><span class="job-tag"><i class="fas fa-map-marker-alt"></i>Amsterdam</span><span class="job-tag"><i class="fas fa-clock"></i>40 <span class="hidden-nl">uur</span><span class="hidden-en">hrs</span></span><span class="job-tag"><i class="fas fa-user-tie"></i><span class="hidden-nl">Senior</span><span class="hidden-en">Senior</span></span><span class="job-tag"><i class="fas fa-briefcase"></i>6+ <span class="hidden-nl">jaar</span><span class="hidden-en">years</span></span></div>
+					<p class="job-desc"><span class="hidden-nl">Financiële analyse en rapportage.</span><span class="hidden-en">Financial analysis and reporting.</span></p>
+					<a class="job-button" href="#" onclick="showPage('contact');return false;"><span class="hidden-nl">Solliciteren</span><span class="hidden-en">Apply Now</span></a>
+				</div>
+			</div>
+			<p class="no-results" id="md-empty" hidden></p>
+		</div>
+	</div>
+
+	<!-- ========== CONTACT ========== -->
+	<div id="contact" class="page">
+		<div class="contact-page">
+			<div class="contact-container">
+				<h1 class="contact-title"><span class="hidden-nl">Start een Gesprek</span><span class="hidden-en">Start a Conversation</span></h1>
+				<p class="contact-subtitle"><span class="hidden-nl">Stuur uw gegevens en wij nemen snel contact met u op om uw ideale kansen te bespreken</span><span class="hidden-en">Send your details and we will contact you shortly to discuss your ideal opportunities.</span></p>
+				<form class="contact-form" onsubmit="alert('In WordPress live wordt dit opgeslagen onder Sollicitaties.');return false;">
+					<div class="form-row">
+						<div class="form-group"><label><span class="hidden-nl">Voornaam</span><span class="hidden-en">First Name</span></label><input type="text" placeholder="Uw voornaam"></div>
+						<div class="form-group"><label><span class="hidden-nl">Achternaam</span><span class="hidden-en">Last Name</span></label><input type="text" placeholder="Uw achternaam"></div>
+					</div>
+					<div class="form-group"><label><span class="hidden-nl">E-mailadres</span><span class="hidden-en">Email Address</span></label><input type="email"></div>
+					<div class="form-group"><label><span class="hidden-nl">Telefoonnummer</span><span class="hidden-en">Phone Number</span></label><input type="tel"></div>
+					<div class="form-group"><label><span class="hidden-nl">Bericht</span><span class="hidden-en">Message</span></label><textarea placeholder="Vertel ons over uzelf..."></textarea></div>
+					<div class="form-group"><label><span class="hidden-nl">CV (optioneel)</span><span class="hidden-en">CV (optional)</span></label><input type="file" accept=".pdf,.doc,.docx"></div>
+					<button type="submit" class="submit-btn"><span class="hidden-nl">Verzoek Versturen</span><span class="hidden-en">Send Request</span></button>
+					<div class="form-message"></div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- ========== FOOTER ========== -->
+	<footer class="site-footer">
+		<div class="footer-content">
+			<div class="footer-column"><h3 class="hidden-nl">Over Ons</h3><h3 class="hidden-en">About Us</h3><p class="hidden-nl">Randstad-Diensten is een wereldwijd uitzendbureau dat al meer dan 60 jaar talent verbindt met transformerende kansen.</p><p class="hidden-en">Randstad-Diensten is a global recruitment leader with 60+ years of experience connecting talent with transformative opportunities.</p></div>
+			<div class="footer-column"><h3 class="hidden-nl">Neem Contact Op</h3><h3 class="hidden-en">Contact Us</h3><p>info@randstad-diensten.nl</p><p>+31 30 202 0202</p><p>Slotlaan 314 B, 3701GX Zeist</p></div>
+			<div class="footer-column"><h3 class="hidden-nl">Sociale Media</h3><h3 class="hidden-en">Social Media</h3><p><a href="#">LinkedIn</a></p><p><a href="#">Facebook</a></p><p><a href="#">Instagram</a></p></div>
+			<div class="footer-column"><h3 class="hidden-nl">Links</h3><h3 class="hidden-en">Links</h3><p><a href="#">Privacy</a></p><p><a href="#"><span class="hidden-nl">Voorwaarden</span><span class="hidden-en">Terms</span></a></p><p><a href="#">Sitemap</a></p></div>
+		</div>
+		<div class="footer-bottom"><p>&copy; 2026 Randstad-Diensten. <span class="hidden-nl">Alle rechten voorbehouden.</span><span class="hidden-en">All rights reserved.</span></p></div>
+	</footer>
+
+	<!-- Preview page switching (real site uses separate WordPress pages) -->
+	<script>
+		function showPage(name, el) {
+			document.querySelectorAll('.page').forEach(function (p) { p.classList.remove('active'); });
+			var target = document.getElementById(name);
+			if (target) target.classList.add('active');
+			document.querySelectorAll('.nav-btn').forEach(function (b) { b.classList.remove('active'); });
+			if (el) { el.classList.add('active'); }
+			else {
+				var map = { home: 0, jobs: 1, contact: 2 };
+				var btns = document.querySelectorAll('.nav-btn');
+				if (btns[map[name]]) btns[map[name]].classList.add('active');
+			}
+			window.scrollTo(0, 0);
+		}
+	</script>
+	<!-- The REAL theme scripts, used 1:1 -->
+	<script src="multidiensten/js/main.js"></script>
+	<script src="multidiensten/js/jobs.js"></script>
+	<script src="multidiensten/js/carousel.js"></script>
+</body>
+</html>

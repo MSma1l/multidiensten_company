@@ -1,0 +1,31 @@
+# Same-origin overlay for exposing the running stack through one Cloudflare
+# tunnel. Use together with the base file:
+#
+#   docker compose -f docker-compose.yml -f docker-compose.tunnel.yml up -d --build
+#
+# It rebuilds the frontend for same-origin (VITE_API_URL="") and adds an
+# HTTP-only nginx proxy on host port 8090 that fronts the SPA, the API and the
+# secret admin panel. cloudflared then tunnels http://localhost:8090.
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        # Same-origin: the SPA calls /api relative to whatever host serves it,
+        # so it works behind the *.trycloudflare.com domain.
+        VITE_API_URL: ""
+    # Not published directly anymore; reached through the proxy.
+    ports: !reset []
+
+  proxy:
+    image: nginx:alpine
+    restart: unless-stopped
+    depends_on:
+      - backend
+      - frontend
+    ports:
+      - "8090:80"
+    volumes:
+      - ./deploy/nginx/tunnel.conf:/etc/nginx/conf.d/default.conf:ro
