@@ -6,6 +6,7 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 .env
+.env.production
 
 # Python
 __pycache__/
