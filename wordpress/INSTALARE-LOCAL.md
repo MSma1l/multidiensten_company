@@ -52,7 +52,7 @@ Acesta este folderul în care stau temele: `app/public/wp-content/themes/`
 
 1. Deschide un al doilea Finder și mergi la folderul temei pregătite:
 
-   `/Users/ivanturcan/Desktop/Project/multidiensten_company/wordpress/multidiensten/`
+   `<folderul-proiectului>/wordpress/multidiensten/`
 
 2. **Copiază tot folderul `multidiensten`** (nu doar fișierele din el – folderul întreg).
 3. **Lipește-l** în folderul de teme deschis la pasul anterior:

@@ -92,6 +92,7 @@ $COMPOSE run --rm --entrypoint "\
     $staging_arg \
     $email_arg \
     -d $DOMAIN \
+    -d www.$DOMAIN \
     --rsa-key-size $RSA_KEY_SIZE \
     --agree-tos \
     --no-eff-email \
