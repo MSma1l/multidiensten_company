@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useLanguage } from '../../context/LanguageContext.jsx'
 import styles from './Footer.module.css'
 
@@ -35,13 +36,13 @@ export default function Footer() {
         <div className={styles.column}>
           <h3>{t.footer.linksTitle}</h3>
           <p>
-            <a href="#">{t.footer.privacy}</a>
+            <Link to="/privacy">{t.footer.privacy}</Link>
           </p><br />
           <p>
-            <a href="#">{t.footer.terms}</a>
+            <Link to="/voorwaarden">{t.footer.terms}</Link>
           </p><br />
           <p>
-            <a href="#">{t.footer.sitemap}</a>
+            <Link to="/contact">{t.footer.sitemap}</Link>
           </p>
         </div>
       </div>
