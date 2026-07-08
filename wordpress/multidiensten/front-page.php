@@ -42,7 +42,7 @@ $contact_url   = esc_url( md_page_url( 'contact' ) );
 		<div class="quick-stats-container">
 			<div class="quick-stat">
 				<div class="quick-stat-icon"><i class="fas fa-users"></i></div>
-				<div class="quick-stat-number">185K+</div>
+				<div class="quick-stat-number">185+</div>
 				<div class="quick-stat-label hidden-nl">Aangenomen Professionals</div>
 				<div class="quick-stat-label hidden-en">Professionals Hired</div>
 				<div class="quick-stat-text hidden-nl">Alleen dit jaar al</div>
@@ -51,7 +51,7 @@ $contact_url   = esc_url( md_page_url( 'contact' ) );
 
 			<div class="quick-stat">
 				<div class="quick-stat-icon"><i class="fas fa-briefcase"></i></div>
-				<div class="quick-stat-number">5000+</div>
+				<div class="quick-stat-number">50+</div>
 				<div class="quick-stat-label hidden-nl">Openstaande Vacatures</div>
 				<div class="quick-stat-label hidden-en">Open Positions</div>
 				<div class="quick-stat-text hidden-nl">Nu beschikbaar</div>
@@ -63,8 +63,8 @@ $contact_url   = esc_url( md_page_url( 'contact' ) );
 				<div class="quick-stat-number">4.9/5</div>
 				<div class="quick-stat-label hidden-nl">Klantbeoordelingen</div>
 				<div class="quick-stat-label hidden-en">Client Ratings</div>
-				<div class="quick-stat-text hidden-nl">Van 10.000+ gebruikers</div>
-				<div class="quick-stat-text hidden-en">From 10K+ users</div>
+				<div class="quick-stat-text hidden-nl">Van 1000+ gebruikers</div>
+				<div class="quick-stat-text hidden-en">From 1000+ users</div>
 			</div>
 
 			<div class="quick-stat">

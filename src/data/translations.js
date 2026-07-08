@@ -15,9 +15,9 @@ export const translations = {
     },
 
     stats: [
-      { number: '185K+', label: 'Aangenomen Professionals', text: 'Alleen dit jaar al', icon: 'fa-users' },
-      { number: '5000+', label: 'Openstaande Vacatures', text: 'Nu beschikbaar', icon: 'fa-briefcase' },
-      { number: '4.9/5', label: 'Klantbeoordelingen', text: 'Van 10.000+ gebruikers', icon: 'fa-star' },
+      { number: '185+', label: 'Aangenomen Professionals', text: 'Alleen dit jaar al', icon: 'fa-users' },
+      { number: '50+', label: 'Openstaande Vacatures', text: 'Nu beschikbaar', icon: 'fa-briefcase' },
+      { number: '4.9/5', label: 'Klantbeoordelingen', text: 'Van 1000+ gebruikers', icon: 'fa-star' },
       { number: '100%', label: 'Volledige Toewijding', text: 'Voor uw succes', icon: 'fa-handshake' },
     ],
 
@@ -154,9 +154,9 @@ export const translations = {
     },
 
     stats: [
-      { number: '185K+', label: 'Professionals Hired', text: 'This year alone', icon: 'fa-users' },
-      { number: '5000+', label: 'Open Positions', text: 'Ready now', icon: 'fa-briefcase' },
-      { number: '4.9/5', label: 'Client Ratings', text: 'From 10K+ users', icon: 'fa-star' },
+      { number: '185+', label: 'Professionals Hired', text: 'This year alone', icon: 'fa-users' },
+      { number: '50+', label: 'Open Positions', text: 'Ready now', icon: 'fa-briefcase' },
+      { number: '4.9/5', label: 'Client Ratings', text: 'From 1000+ users', icon: 'fa-star' },
       { number: '100%', label: 'Full Commitment', text: 'To your success', icon: 'fa-handshake' },
     ],
 
