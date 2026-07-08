@@ -15,9 +15,7 @@ export default function Footer() {
 
         <div className={styles.column}>
           <h3>{t.footer.contactTitle}</h3>
-          <p>info@randstad.nl</p><br />
-          <p>+31 30 202 0202</p><br />
-          <p>Slotlaan 314 B, 3701GX Zeist</p>
+          <p>info@randstad.nl</p>
         </div>
 
         <div className={styles.column}>

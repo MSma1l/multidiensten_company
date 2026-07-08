@@ -20,8 +20,6 @@
 				<h3 class="hidden-nl">Neem Contact Op</h3>
 				<h3 class="hidden-en">Contact Us</h3>
 				<p>info@randstad-diensten.nl</p>
-				<p>+31 30 202 0202</p>
-				<p>Slotlaan 314 B, 3701GX Zeist</p>
 			</div>
 			<div class="footer-column">
 				<h3 class="hidden-nl">Sociale Media</h3>
