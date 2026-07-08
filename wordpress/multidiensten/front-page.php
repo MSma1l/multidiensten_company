@@ -211,9 +211,9 @@ $contact_url   = esc_url( md_page_url( 'contact' ) );
 								<p class="testimonial-text hidden-nl">"Randstad-Diensten heeft mijn carrière getransformeerd. Het proces was eenvoudig, snel en professioneel. Binnen enkele dagen had ik mijn perfecte nieuwe baan!"</p>
 								<p class="testimonial-text hidden-en">"Randstad-Diensten transformed my career. The process was smooth, fast and professional. Within days, I was in my perfect new role!"</p>
 								<div class="testimonial-author">
-									<div class="author-avatar">MP</div>
+									<div class="author-avatar">HV</div>
 									<div class="author-info">
-										<h4>Miguel Pereira</h4>
+										<h4>Harold Verwoerd</h4>
 										<div class="author-job hidden-nl">Technisch Specialist</div>
 										<div class="author-job hidden-en">Technical Specialist</div>
 									</div>
@@ -232,9 +232,9 @@ $contact_url   = esc_url( md_page_url( 'contact' ) );
 								<p class="testimonial-text hidden-nl">"Het team van Randstad-Diensten was geweldig! Ze vonden niet alleen de juiste baan, maar bereidden me ook voor op succes."</p>
 								<p class="testimonial-text hidden-en">"The Randstad-Diensten team was amazing! Not only did they find the right job, they prepared me for success."</p>
 								<div class="testimonial-author">
-									<div class="author-avatar">CF</div>
+									<div class="author-avatar">SY</div>
 									<div class="author-info">
-										<h4>Carla Fernandes</h4>
+										<h4>Sinem Yalcin</h4>
 										<div class="author-job hidden-nl">Projectmanager</div>
 										<div class="author-job hidden-en">Project Manager</div>
 									</div>
@@ -253,9 +253,9 @@ $contact_url   = esc_url( md_page_url( 'contact' ) );
 								<p class="testimonial-text hidden-nl">"Mijn salaris verdrievoudigen? Ja! Randstad-Diensten heeft een geweldig pakket voor mij onderhandeld. Bedankt voor de toewijding!"</p>
 								<p class="testimonial-text hidden-en">"Triple my salary? Yes! Randstad-Diensten negotiated an incredible package for me. Thank you for the dedication!"</p>
 								<div class="testimonial-author">
-									<div class="author-avatar">JL</div>
+									<div class="author-avatar">MI</div>
 									<div class="author-info">
-										<h4>João Lucas</h4>
+										<h4>Murat el Idrissi</h4>
 										<div class="author-job hidden-nl">Financieel Analist</div>
 										<div class="author-job hidden-en">Financial Analyst</div>
 									</div>

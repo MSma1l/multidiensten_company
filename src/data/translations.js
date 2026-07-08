@@ -50,9 +50,9 @@ export const translations = {
       title: 'Succesverhalen',
       subtitle: 'Professionals die hun leven veranderden dankzij onze vacatures',
       items: [
-        { text: '"Randstad heeft mijn carrière getransformeerd. Het proces was eenvoudig, snel en professioneel. Binnen enkele dagen had ik mijn perfecte nieuwe baan!"', name: 'Miguel Pereira', job: 'Technisch Specialist', initials: 'MP' },
-        { text: '"Het team van Randstad was geweldig! Ze vonden niet alleen de juiste baan, maar bereidden me ook voor op succes."', name: 'Carla Fernandes', job: 'Projectmanager', initials: 'CF' },
-        { text: '"Mijn salaris verdrievoudigen? Ja! Randstad heeft een geweldig pakket voor mij onderhandeld. Bedankt voor de toewijding!"', name: 'João Lucas', job: 'Financieel Analist', initials: 'JL' },
+        { text: '"Randstad heeft mijn carrière getransformeerd. Het proces was eenvoudig, snel en professioneel. Binnen enkele dagen had ik mijn perfecte nieuwe baan!"', name: 'Harold Verwoerd', job: 'Technisch Specialist', initials: 'HV' },
+        { text: '"Het team van Randstad was geweldig! Ze vonden niet alleen de juiste baan, maar bereidden me ook voor op succes."', name: 'Sinem Yalcin', job: 'Projectmanager', initials: 'SY' },
+        { text: '"Mijn salaris verdrievoudigen? Ja! Randstad heeft een geweldig pakket voor mij onderhandeld. Bedankt voor de toewijding!"', name: 'Murat el Idrissi', job: 'Financieel Analist', initials: 'MI' },
       ],
     },
 
@@ -189,9 +189,9 @@ export const translations = {
       title: 'Success Stories',
       subtitle: 'Professionals who transformed their lives through our opportunities',
       items: [
-        { text: '"Randstad transformed my career. The process was smooth, fast and professional. Within days, I was in my perfect new role!"', name: 'Miguel Pereira', job: 'Technical Specialist', initials: 'MP' },
-        { text: '"The Randstad team was amazing! Not only did they find the right job, they prepared me for success."', name: 'Carla Fernandes', job: 'Project Manager', initials: 'CF' },
-        { text: '"Triple my salary? Yes! Randstad negotiated an incredible package for me. Thank you for the dedication!"', name: 'João Lucas', job: 'Financial Analyst', initials: 'JL' },
+        { text: '"Randstad transformed my career. The process was smooth, fast and professional. Within days, I was in my perfect new role!"', name: 'Harold Verwoerd', job: 'Technical Specialist', initials: 'HV' },
+        { text: '"The Randstad team was amazing! Not only did they find the right job, they prepared me for success."', name: 'Sinem Yalcin', job: 'Project Manager', initials: 'SY' },
+        { text: '"Triple my salary? Yes! Randstad negotiated an incredible package for me. Thank you for the dedication!"', name: 'Murat el Idrissi', job: 'Financial Analyst', initials: 'MI' },
       ],
     },
 
